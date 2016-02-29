@@ -11,9 +11,9 @@
   <!-- Bootstrap 3.3.5 -->
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
   <!-- bootstrap.colorpickersliders -->
   <link href="{% static 'css/bootstrap.colorpickersliders.min.css' %}" rel="stylesheet">
   <!-- Theme style -->
@@ -113,7 +113,8 @@
 <!-- FastClick -->
 <script src="{% static 'js/fastclick.min.js' %}"></script>
 <!-- bootstrap.colorpickersliders -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/tinycolor/0.11.1/tinycolor.min.js"></script>
+
+<script src="{% static 'js/tinycolor.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.colorpickersliders.nocielch.min.js' %}"></script>
 
 <!-- Underscore 1.8.3 -->
