@@ -44,3 +44,5 @@ mc2/local_settings.py
 
 #Pycharm IDE files
 .idea/
+
+.DS_Store
