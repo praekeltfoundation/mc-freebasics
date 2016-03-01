@@ -1,0 +1,25 @@
+sudo: false
+cache:
+  directories:
+    - $HOME/.cache/pip
+    - $HOME/.hypothesis
+language: python
+python:
+  - "2.7"
+before_install:
+  - mkdir -p $HOME/.hypothesis
+  - export HYPOTHESIS_DATABASE_FILE=$HOME/.hypothesis/examples.db
+install:
+  - pip install --upgrade pip --cache-dir $HOME/.pip-cache/
+  - pip install coveralls --cache-dir $HOME/.pip-cache/
+  - pip install "Django >=1.8,<1.9" --cache-dir $HOME/.pip-cache/
+  - pip install -r requirements-dev.txt --cache-dir $HOME/.pip-cache/
+  - pip install -r requirements.txt --cache-dir $HOME/.pip-cache/
+  - pip install -e . --cache-dir $HOME/.pip-cache/
+script:
+  - flake8
+  - py.test
+services:
+  - elasticsearch
+after_success:
+  - coveralls
