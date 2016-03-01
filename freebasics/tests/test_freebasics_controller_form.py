@@ -1,7 +1,7 @@
 import pytest
 from mc2.controllers.base.tests.base import ControllerBaseTestCase
-from mc2.controllers.freebasics.forms import FreeBasicsControllerForm
-from mc2.controllers.freebasics.models import FreeBasicsController
+from freebasics.forms import FreeBasicsControllerForm
+from freebasics.models import FreeBasicsController
 from django.contrib.auth.models import User
 from django.http import QueryDict
 
@@ -57,3 +57,13 @@ class FreeBasicsControllerFormTestCase(ControllerBaseTestCase):
             self.assertRegexpMatches(
                 form._get_marathon_cmd(t[0]),
                 "./deploy/docker-entrypoint.sh [A-Za-z]+ [A-Za-z]+\.wsgi 8000")
+
+    def test__freebasics_app_id_prefix(self):
+        for t in FreeBasicsController.TEMPLATE_CHOICES:
+            controller = FreeBasicsController.objects.create(
+                name='Test App',
+                owner=self.user,
+                selected_template=t[0],
+            )
+            controller.save
+            self.assertTrue(controller.app_id.startswith('freebasics-'))

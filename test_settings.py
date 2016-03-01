@@ -1,4 +1,4 @@
-from mc2.settings import *
+from freebasics.settings import *
 
 DATABASES = {
     'default': {

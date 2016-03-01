@@ -15,3 +15,10 @@ class FreeBasicsController(DockerController):
     selected_template = models.CharField(
         default=TEMPLATE_CHOICES[0][1], max_length=100, blank=False,
         null=False)
+
+    @property
+    def app_id(self):
+        """
+        The app id to use for marathon
+        """
+        return 'freebasics-%s' % self.slug
