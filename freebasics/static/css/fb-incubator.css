@@ -4,9 +4,9 @@
  */
 
  /* Load Fonts */
-@font-face{font-family:"Basis Grotesque Pro";src:url("../../assets/fonts/basis_grotesque_pro_light-web.eot");src:url("../../assets/fonts/basis_grotesque_pro_light-web.eot?#iefix") format("embedded-opentype"),url("../../assets/fonts/basis_grotesque_pro_light-web.woff") format("woff"),url("../../assets/fonts/basis_grotesque_pro_light-web.svg#typotheque_webfonts_service") format("svg");font-style:normal;font-weight:200;font-stretch:normal}
+@font-face{font-family:"Basis Grotesque Pro";src:url("../assets/fonts/basis_grotesque_pro_light-web.eot");src:url("../assets/fonts/basis_grotesque_pro_light-web.eot?#iefix") format("embedded-opentype"),url("../assets/fonts/basis_grotesque_pro_light-web.woff") format("woff"),url("../assets/fonts/basis_grotesque_pro_light-web.svg#typotheque_webfonts_service") format("svg");font-style:normal;font-weight:200;font-stretch:normal}
 
-@font-face{font-family:"Basis Grotesque Pro";src:url("../../assets/fonts/basis_grotesque_pro_bold-web.eot");src:url("../../assets/fonts/basis_grotesque_pro_bold-web.eot?#iefix") format("embedded-opentype"),url("../../assets/fonts/basis_grotesque_pro_bold-web.woff") format("woff"),url("../../assets/fonts/basis_grotesque_pro_bold-web.svg#typotheque_webfonts_service") format("svg");font-style:normal;font-weight:500;font-stretch:normal}
+@font-face{font-family:"Basis Grotesque Pro";src:url("../assets/fonts/basis_grotesque_pro_bold-web.eot");src:url("../assets/fonts/basis_grotesque_pro_bold-web.eot?#iefix") format("embedded-opentype"),url("../assets/fonts/basis_grotesque_pro_bold-web.woff") format("woff"),url("../assets/fonts/basis_grotesque_pro_bold-web.svg#typotheque_webfonts_service") format("svg");font-style:normal;font-weight:500;font-stretch:normal}
 
 html{
   background-color: #F4F4F4;
