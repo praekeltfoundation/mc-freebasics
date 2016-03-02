@@ -5,6 +5,11 @@ from freebasics import views
 
 urlpatterns = patterns(
     '',
+    url(
+        r'^$',
+        views.FreeBasicsHomepageView.as_view(),
+        name='home'
+    ),
     url(r'^', include('mc2.urls')),
     url(
         r'^add/$',

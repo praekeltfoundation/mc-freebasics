@@ -1,14 +1,18 @@
 import pytest
 from mc2.controllers.base.tests.base import ControllerBaseTestCase
+from mc2.organizations.models import Organization
+
 from freebasics.forms import FreeBasicsControllerForm
 from freebasics.models import FreeBasicsController
+
 from django.contrib.auth.models import User
 from django.http import QueryDict
 
 
 @pytest.mark.django_db
 class FreeBasicsControllerFormTestCase(ControllerBaseTestCase):
-    fixtures = ['test_users.json', 'test_social_auth.json']
+    fixtures = [
+        'test_users.json', 'test_social_auth.json', 'test_organizations.json']
 
     def setUp(self):
         self.user = User.objects.get(username='testuser')
@@ -65,5 +69,24 @@ class FreeBasicsControllerFormTestCase(ControllerBaseTestCase):
                 owner=self.user,
                 selected_template=t[0],
             )
-            controller.save
             self.assertTrue(controller.app_id.startswith('freebasics-'))
+
+    def test__homepage_redirects_to_create_page_if_no_app_yet(self):
+        self.client.login(username='testuser', password='test')
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['Location'], 'http://testserver/add/')
+
+    def test__homepage_shows_correct_app(self):
+        self.client.login(username='testuser', password='test')
+
+        controller = FreeBasicsController.objects.create(
+            name='Happy Place',
+            owner=self.user,
+            selected_template=FreeBasicsController.TEMPLATE_CHOICES[0],
+        )
+        controller.organization = Organization.objects.get(pk=1)
+        controller.save()
+
+        response = self.client.get('/')
+        self.assertContains(response, 'Happy Place')
