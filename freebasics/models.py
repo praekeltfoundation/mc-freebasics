@@ -41,3 +41,4 @@ class FreeBasicsTemplateData(models.Model):
     category_position = models.IntegerField(default=4)
     poll_position = models.IntegerField(default=5)
     footer_position = models.IntegerField(default=6)
+    controller = models.ForeignKey(FreeBasicsController, blank=True, null=True)
