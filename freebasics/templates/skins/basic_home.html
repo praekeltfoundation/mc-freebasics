@@ -2,7 +2,7 @@
 
 {% load i18n controller_base_tags mc2_tags static admin_urls%}
 
-{% block title %}Mission Control - Free Basics{% endblock %}
+{% block title %}Free Basics Incubator Admin {% endblock %}
 
 {% block page_header_title %}<h1>Home</h1>{% endblock %}
 
@@ -10,21 +10,13 @@
 
 {% block content %}
 <div class="content-wrapper" id="stepper">
-<div class="col-lg-3 col-xs-6">
-         <!-- small box -->
-         <div class="small-box bg-aqua">
-           <div class="inner">
-             <h3>Sites</h3>
-           </div>
-           <div class="icon">
-             <i class="fa fa-shopping-cart"></i>
-           </div>
-           <a href="{% url 'freebasics_add' %}" class="small-box-footer">
-             Create/Edit <i class="fa fa-arrow-circle-right"></i>
-           </a>
-         </div>
-       </div>
-       </div>
+<div class="content stepper-content">
+{% for controller in controller_list %}
+{% render_controller controller %}
+{% endfor %}
+</div>
+</div>
+
 {% endblock %}
 
 {% block script %}
