@@ -28,13 +28,13 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 <!-- Main Header -->
+{% block header %}
 <header class="main-header ">
   <!-- Logo -->
-  <a href="/ " class="logo" data-toggle="offcanvas" role="button">
+  <a href="/" class="logo" data-toggle="offcanvas" role="button">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"></span>
     <!-- logo for regular state and mobile devices -->
@@ -69,7 +69,9 @@
     </div>
   </nav>
 </header>
+{% endblock %}
 <!-- Left side column. contains the logo and sidebar -->
+{% block sidebar %}
 <aside class="main-sidebar">
 
   <section class="sidebar">
@@ -87,6 +89,7 @@
   </section>
   <!-- /.sidebar -->
 </aside>
+{% endblock %}
 {% block content %}{% endblock %}
 </div>
 <!-- ./wrapper -->
