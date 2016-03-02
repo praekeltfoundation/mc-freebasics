@@ -25,18 +25,18 @@ class FreeBasicsController(DockerController):
 
 
 class FreeBasicsTemplateData(models.Model):
-    siteName = models.CharField(max_length=100, blank=True, null=True)
-    siteNameUrl = models.CharField(
+    site_name = models.CharField(max_length=100, blank=True, null=True)
+    site_name_url = models.CharField(
         unique=True, max_length=100, blank=True, null=True)
-    bodyBackgroundColor = models.CharField(
+    body_background_color = models.CharField(
         max_length=100, blank=True, null=True)
-    bodyColor = models.CharField(max_length=100, blank=True, null=True)
-    bodyFontFamily = models.CharField(max_length=100, blank=True, null=True)
+    body_color = models.CharField(max_length=100, blank=True, null=True)
+    body_font_family = models.CharField(max_length=100, blank=True, null=True)
     accent1 = models.CharField(max_length=100, blank=True, null=True)
     accent2 = models.CharField(max_length=100, blank=True, null=True)
-    headerPosition = models.IntegerField(default=1)
-    articlePosition = models.IntegerField(default=2)
-    bannerPosition = models.IntegerField(default=3)
-    categoryPosition = models.IntegerField(default=4)
-    pollPosition = models.IntegerField(default=5)
-    footerPosition = models.IntegerField(default=6)
+    header_position = models.IntegerField(default=1)
+    article_position = models.IntegerField(default=2)
+    banner_position = models.IntegerField(default=3)
+    category_position = models.IntegerField(default=4)
+    poll_position = models.IntegerField(default=5)
+    footer_position = models.IntegerField(default=6)
