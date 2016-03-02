@@ -27,8 +27,8 @@ class FreeBasicsController(DockerController):
 class FreeBasicsTemplateData(models.Model):
     site_name = models.CharField(
         unique=True, max_length=100, blank=True, null=True)
-    site_name_url = models.CharField(
-        unique=True, max_length=100, blank=True, null=True)
+    site_name_url = models.URLField(
+        unique=True, max_length=255, blank=True, null=True)
     body_background_color = models.CharField(
         max_length=100, blank=True, null=True)
     body_color = models.CharField(max_length=100, blank=True, null=True)
