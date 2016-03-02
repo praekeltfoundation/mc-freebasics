@@ -22,3 +22,21 @@ class FreeBasicsController(DockerController):
         The app id to use for marathon
         """
         return 'freebasics-%s' % self.slug
+
+
+class FreeBasicsTemplateData(models.Model):
+    siteName = models.CharField(max_length=100, blank=True, null=True)
+    siteNameUrl = models.CharField(
+        unique=True, max_length=100, blank=True, null=True)
+    bodyBackgroundColor = models.CharField(
+        max_length=100, blank=True, null=True)
+    bodyColor = models.CharField(max_length=100, blank=True, null=True)
+    bodyFontFamily = models.CharField(max_length=100, blank=True, null=True)
+    accent1 = models.CharField(max_length=100, blank=True, null=True)
+    accent2 = models.CharField(max_length=100, blank=True, null=True)
+    headerPosition = models.IntegerField(default=1)
+    articlePosition = models.IntegerField(default=2)
+    bannerPosition = models.IntegerField(default=3)
+    categoryPosition = models.IntegerField(default=4)
+    pollPosition = models.IntegerField(default=5)
+    footerPosition = models.IntegerField(default=6)
