@@ -1,21 +1,42 @@
-{% extends 'base/inclusion_tags/controller_object.html' %}
-{% block controller_visit %}
-<div class="application-item-box bg-blue view app-view-action">
-<a class="link docker" href="#">
-  <div class="info-box-icon icon-small">
-    {% load staticfiles %}
-    {% with "img/freebasics-container-vector.png" as icon_src %}
-        <img class="icon-container-freebasics" src="{% static icon_src %}"/>
-    {% endwith %}
-  </div>
-  View
-</a>
+<div class="col-md-4">
+          <!-- Widget: user widget style 1 -->
+          <div class="box box-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-purple">
+              <h3 class="widget-user-username">{{controller.name}}</h3>
+              <h6 class="widget-user-desc">http://happyplace.molo.site</h6>
+              <div class="widget-user-desc">Last modified on {{controller.modified_at|date:"D d M Y" }}</div>
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-sm-4 border-right">
+                  <div class="description-block">
+                    <h5 class="description-header"><a href="#">View</a></h5>
+                    <span class="description-text"></span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 border-right">
+                  <div class="description-block">
+                    <h5 class="description-header"><a href="#">Admin</a></h5>
+                    <span class="description-text"></span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4">
+                  <div class="description-block">
+                    <h5 class="description-header"><a href="{% url 'freebasics_edit' controller.id %}">Edit</a></h5>
+                    <span class="description-text"></span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+          </div>
+          <!-- /.widget-user -->
+        </div>
 </div>
-{% endblock %}
-
-{% block edit_action %}
-    <a class="link" href="{% url 'freebasics_edit' controller.id %}">
-        <span><i class="fa fa-gears info-box-icon icon-small"></i></span>
-        Edit
-    </a>
-{% endblock %}
