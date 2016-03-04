@@ -1,7 +1,7 @@
 var fb = (function($) {
 	var that = this;
 
-	that.serverUrl = 'http://localhost:5000';
+	that.serverUrl = '/api_stub/';
 	that.useLocalStorage = false;
 
 	var site = {
@@ -266,7 +266,7 @@ var fb = (function($) {
 	}
 
 	function saveConfigCallback(data, textStatus, jqXHR) {
-		alert("Config saved");
+        window.location.href = '/';
 	}
 
 	function loadConfig() {
@@ -303,6 +303,7 @@ var fb = (function($) {
 		});
 	}
 
+    //TODO: Handle errors a lot better and more gracefully. No alerts
 	function ajaxErrorLoad(data, textStatus, jqXHR) {
 		alert("Could not retrieve config using Ajax call");
 	}
@@ -313,9 +314,7 @@ var fb = (function($) {
 
 	function loadConfigAjax() {
 		return $.ajax({
-			url: that.serverUrl,
-			jsonp: 'callback',
-			dataType: 'jsonp'
+			url: that.serverUrl
 		});
 	}
 
@@ -323,9 +322,8 @@ var fb = (function($) {
 		return $.ajax({
 			url: that.serverUrl,
 			type: 'POST',
-			crossDomain: true,
 			dataType: 'json',
-			data: {'site': JSON.stringify(site)}
+			data: JSON.stringify(site)
 		});
 	}
 

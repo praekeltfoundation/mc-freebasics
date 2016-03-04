@@ -20,4 +20,5 @@ urlpatterns = patterns(
         r'^(?P<controller_pk>\d+)/$',
         views.FreeBasicsControllerEditView.as_view(),
         name='freebasics_edit'),
+    url(r'^api_stub/$', views.template_data_api_stub, name='api_stub'),
 )
