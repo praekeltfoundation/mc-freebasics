@@ -34,12 +34,13 @@ class FreeBasicsControllerEditView(ControllerEditView):
 @csrf_exempt
 def template_data_api_stub(request):
     if request.method == 'POST':
+        json.loads(request.body)
         data = {'success': True}
     else:
         data = {
             "general": {
-                "siteName": "HappyPlace",
-                "siteNameUrl": "happyplace"
+                "siteName": "Happy Place",
+                "siteNameUrl": "happy-place"
             },
             "styles": {
                 "base-bcolor": {"background-color": "#efefef"},
