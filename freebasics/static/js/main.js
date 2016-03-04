@@ -173,7 +173,7 @@ var fb = (function($) {
 
 	function changeSiteName() {
 		site.general.siteName = that.$siteinput.val();
-		site.general.siteNameUrl = site.general.siteName.replace(/ /g,"-");
+		site.general.siteNameUrl = site.general.siteName.replace(/ /g,"-").toLowerCase();
 		setGeneralValues();
 	}
 
