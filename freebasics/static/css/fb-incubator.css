@@ -4,9 +4,9 @@
  */
 
  /* Load Fonts */
-@font-face{font-family:"Basis Grotesque Pro";src:url("../../assets/fonts/basis_grotesque_pro_light-web.eot");src:url("../../assets/fonts/basis_grotesque_pro_light-web.eot?#iefix") format("embedded-opentype"),url("../../assets/fonts/basis_grotesque_pro_light-web.woff") format("woff"),url("../../assets/fonts/basis_grotesque_pro_light-web.svg#typotheque_webfonts_service") format("svg");font-style:normal;font-weight:200;font-stretch:normal}
+@font-face{font-family:"Basis Grotesque Pro";src:url("../assets/fonts/basis_grotesque_pro_light-web.eot");src:url("../assets/fonts/basis_grotesque_pro_light-web.eot?#iefix") format("embedded-opentype"),url("../assets/fonts/basis_grotesque_pro_light-web.woff") format("woff"),url("../assets/fonts/basis_grotesque_pro_light-web.svg#typotheque_webfonts_service") format("svg");font-style:normal;font-weight:200;font-stretch:normal}
 
-@font-face{font-family:"Basis Grotesque Pro";src:url("../../assets/fonts/basis_grotesque_pro_bold-web.eot");src:url("../../assets/fonts/basis_grotesque_pro_bold-web.eot?#iefix") format("embedded-opentype"),url("../../assets/fonts/basis_grotesque_pro_bold-web.woff") format("woff"),url("../../assets/fonts/basis_grotesque_pro_bold-web.svg#typotheque_webfonts_service") format("svg");font-style:normal;font-weight:500;font-stretch:normal}
+@font-face{font-family:"Basis Grotesque Pro";src:url("../assets/fonts/basis_grotesque_pro_bold-web.eot");src:url("../assets/fonts/basis_grotesque_pro_bold-web.eot?#iefix") format("embedded-opentype"),url("../assets/fonts/basis_grotesque_pro_bold-web.woff") format("woff"),url("../assets/fonts/basis_grotesque_pro_bold-web.svg#typotheque_webfonts_service") format("svg");font-style:normal;font-weight:500;font-stretch:normal}
 
 html{
   background-color: #F4F4F4;
@@ -80,7 +80,7 @@ h6{
   margin-left: 200px;
 }
 .fblogo{
-		background-image: url("../../img/praekelt-fbn_logo.png");
+		background-image: url("../img/praekelt-fbn_logo.png");
 		background-repeat: no-repeat;
 		height: 40px;
 		margin-top: 5px;
@@ -407,7 +407,7 @@ a.sidebar-toggle{
   float: left;
 }
 .mobi-prev-1{
-  background-image: url(../../img/samsung_galaxy_y.png);
+  background-image: url(../img/samsung_galaxy_y.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -416,7 +416,7 @@ a.sidebar-toggle{
   max-width: 250px;
 }
 .mobi-prev-2{
-  background-image: url(../../img/nokia_c3.png);
+  background-image: url(../img/nokia_c3.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 0%;
@@ -426,7 +426,7 @@ a.sidebar-toggle{
   margin-top: 20px;
 }
 .mobi-prev-3{
-  background-image: url(../../img/nokia_230.png);
+  background-image: url(../img/nokia_230.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

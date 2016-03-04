@@ -1,4 +1,5 @@
 {% extends "skins/base.html"%}
+{% load static from staticfiles %}
 
 {% block content %}
   <!-- Content Wrapper. Contains page content -->
@@ -118,7 +119,7 @@
             <div class="base-bcolor">
               <div class="grab-sect block-article fb-body fb-card">
                 <h6 class="block-heading fb-accent-1">Article</h6>
-                <img alt="" class="block-img" height="250" src="dist/img/sample-img-sml.png" width="250">
+                <img alt="" class="block-img" height="250" src="{% static 'img/sample-img-sml.png' %}" width="250">
                 <h6 class="sub-heading">Sub Heading</h6>
                 <p>Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel
                   augue laoreet rutrum faucibus dolor auctor posuere consectetur est...</p>
