@@ -1,6 +1,9 @@
 var fb = (function($) {
 	var that = this;
 
+	that.serverUrl = 'http://localhost:5000';
+	that.useLocalStorage = false;
+
 	var site = {
 
 		// holds the general config values
@@ -11,16 +14,22 @@ var fb = (function($) {
 
 		// holds the default styles and inputs
 		styles: {
+			"base-bcolor": {
+				"background-color": "#efefef"
+			},
 			"fb-body": {
-				"background-color": "#ffffff",
-				"color": "#000000",
-				"font-family": "Arial, Helvetica, sans-serif"
+				"font-family": "\"Open Sans\", Helvetica, sans-serif"
+			},
+			"block-heading": {
+				"background-color": "#dfdfdf",
+				"font-family": "\"Montserrat\", Helvetica, sans-serif",
+				"text-transform": "uppercase"
 			},
 			"fb-accent-1": {
-				"color": "#4383CD"
+				"color": "#69269d"
 			},
 			"fb-accent-2": {
-				"color": "#97ee7b"
+				"color": "#c736c0"
 			}
 		},
 
@@ -30,16 +39,16 @@ var fb = (function($) {
 				position: 0
 			},
 			"fb-block-article":{
-				position: 4
+				position: 2
 			},
 			"fb-block-banner": {
-				position: 2
+				position: 1
 			},
 			"fb-block-category": {
 				position: 3
 			},
 			"fb-block-poll": {
-				position: 1
+				position: 4
 			},
 			"fb-block-footer": {
 				position: 5
@@ -48,13 +57,27 @@ var fb = (function($) {
 	};
 
 	function init() {
-		loadConfig();
+		// use a promise to only continue initialisation when config load complete
+		$.when( loadConfig() ).then( setupConfig );
+	}
+
+	// continue with the rest of initialisation once the config has been loaded
+	function initContinued() {
 		initGeneral(site.general);
 		initElements();
 		initBlocks();
 		setGeneralValues();
 		arrangeBlocks(site.blocks);
 		setStyles();
+	}
+
+	// callback after sync or async config loaded. If it's async, data will be populated with JSONP callback data
+	function setupConfig(data, textStatus, jqXHR) {
+		if (data) {
+			that.loadedConfig = data;
+		}
+		site = that.loadedConfig;
+		initContinued();
 	}
 
 	// caches jQuery objects based on the names of the styles
@@ -64,6 +87,7 @@ var fb = (function($) {
 		that.$blockContainer = $('#fb-blockcontainer');
 		that.$navBar = $('#steps-container');
 		that.$reviewBox = $('#temp-review-box');
+		that.$buttonDone = $('#button-done');
 
 		that.$reviewMobi1 = $('#review-mobi-prev-1');
 		that.$reviewMobi2 = $('#review-mobi-prev-2');
@@ -90,7 +114,6 @@ var fb = (function($) {
 					var styleValueInput = input.val();
 					site.styles[classKey][styleKey] = styleValueInput;
 					setStyle(classKey, styleKey, styleValueInput);
-					saveConfig();
 				});
 			});
 		});
@@ -98,6 +121,7 @@ var fb = (function($) {
 		that.$siteinput.on('keyup', changeSiteName);
 		that.$blockContainer.on('changeOrder', changeBlockOrder);
 		that.$navBar.on('click', renderReview)
+		that.$buttonDone.on('click', saveConfig )
 	}
 
 	function getUniqueStyleName(cssClass, styleName) {
@@ -151,7 +175,6 @@ var fb = (function($) {
 		site.general.siteName = that.$siteinput.val();
 		site.general.siteNameUrl = site.general.siteName.replace(/ /g,"-");
 		setGeneralValues();
-		saveConfig();
 	}
 
 	function changeBlockOrder() {
@@ -164,7 +187,6 @@ var fb = (function($) {
 			var blockName = $(block).attr('id');
 			site.blocks[blockName].position = position++;
 		});
-		saveConfig();
 	}
 
 	// block handling
@@ -217,24 +239,44 @@ var fb = (function($) {
 		}
 	}
 
-	function saveConfig() {
+	function saveConfigLocalStorage() {
 		localStorage.setItem("fb-site", JSON.stringify(getCleansedConfig()));
 	}
 
-	function getSavedConfig() {
+	function getSavedConfigLocalStorage() {
 		return localStorage.getItem("fb-site");
 	}
 
-	function deleteSavedConfig() {
+	function deleteSavedConfigLocalStorage() {
 		localStorage.removeItem("fb-site");
+	}
+
+	function saveConfig() {
+		$.when( saveConfigPromise() ).then( saveConfigCallback );
+	}
+
+	function saveConfigPromise() {
+		if (that.useLocalStorage) {
+			saveConfigLocalStorage();
+			return true;
+		} else {
+			return saveConfigAjax();
+			$.when( saveConfigAjax() ).then( setupConfig );
+		}
+	}
+
+	function saveConfigCallback(data, textStatus, jqXHR) {
+		alert("Config saved");
 	}
 
 	function loadConfig() {
 		that.siteDefaults = $.extend({}, site);
-		var config = getSavedConfig();
-		if (config) {
-			site = JSON.parse(config);
-		} // else default to the pre-existing one
+		if (that.useLocalStorage) {
+			that.loadedConfig = JSON.parse(getSavedConfigLocalStorage());
+			return true;
+		} else {
+			return loadConfigAjax();
+		}
 	}
 
 	function deleteBlacklistedProperties(obj, key) {
@@ -261,10 +303,36 @@ var fb = (function($) {
 		});
 	}
 
+	function ajaxErrorLoad(data, textStatus, jqXHR) {
+		alert("Could not retrieve config using Ajax call");
+	}
+
+	function ajaxErrorSave(data, textStatus, jqXHR) {
+		alert("Could not save config using Ajax call");
+	}
+
+	function loadConfigAjax() {
+		return $.ajax({
+			url: that.serverUrl,
+			jsonp: 'callback',
+			dataType: 'jsonp'
+		});
+	}
+
+	function saveConfigAjax() {
+		return $.ajax({
+			url: that.serverUrl,
+			type: 'POST',
+			crossDomain: true,
+			dataType: 'json',
+			data: {'site': JSON.stringify(site)}
+		});
+	}
+
 	return {
 		init: init,
 		printConfig: printConfig,
-		deleteSavedConfig: deleteSavedConfig
+		deleteSavedConfig: deleteSavedConfigLocalStorage
 	};
 })(jQuery);
 

@@ -95,3 +95,10 @@ $(function () {
 		});
 	});
 });
+
+//Google font
+WebFont.load({
+   google: {
+     families: ['Work Sans', 'Roboto', 'Bangers', 'Orbitron', 'Pacifico', 'Passion One', 'Yanone Kaffeesatz', 'Montserrat', 'Fjalla One', 'Oswald', 'Open Sans']
+   }
+ });
