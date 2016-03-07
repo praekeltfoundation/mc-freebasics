@@ -13,20 +13,9 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-class TemplateDataList(APIView):
-    def post(self, request, format=None):
-        controller = FreeBasicsController.objects.create(owner=request.user)
-        request.data['controller'] = controller
-        serializer = FreeBasicsDataSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class TemplateDetail(APIView):
     """
-    Retrieve, update or delete a template instance.
+    Create, Retrieve, update or delete a template instance.
     """
     def get_object(self, pk):
         try:
@@ -39,18 +28,29 @@ class TemplateDetail(APIView):
         serializer = FreeBasicsDataSerializer(template)
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
-        template = self.get_object(pk)
-        serializer = FreeBasicsDataSerializer(template, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     def delete(self, request, pk, format=None):
         template = self.get_object(pk)
         template.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def post(self, request, pk=None, format=None):
+        if not pk:
+            controller = FreeBasicsController.objects.create(
+                owner=request.user)
+            request.data['controller'] = controller
+            serializer = FreeBasicsDataSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            template = self.get_object(pk)
+            controller = FreeBasicsTemplateData.objects.get(pk=pk).controller
+            request.data['controller'] = controller
+            serializer = FreeBasicsDataSerializer(template, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class FreeBasicsHomepageView(HomepageView):
