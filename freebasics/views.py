@@ -16,8 +16,8 @@ from rest_framework import status
 class TemplateDataList(APIView):
     def post(self, request, format=None):
         controller = FreeBasicsController.objects.create(owner=request.user)
-        data = request.data.update['controller': controller]
-        serializer = FreeBasicsDataSerializer(data=data)
+        request.data['controller'] = controller
+        serializer = FreeBasicsDataSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

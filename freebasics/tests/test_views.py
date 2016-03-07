@@ -13,15 +13,13 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
     def setUp(self):
         self.user = User.objects.get(username='testuser')
         self.maxDiff = None
+        self.client = Client()
 
     def test_template_list_post_view(self):
-        client = Client()
-        client.login(username='tester', password='test')
-        response = client.get('/')
+        self.client.login(username='testuser', password='test')
         post_data = {
             'site_name': 'example', 'site_name_url': 'https://example.com',
             'body_background_color': 'purple', 'body_color': 'purple',
             'body_font_family': 'helvetica', 'accent1': '', 'accent2': ''}
-        response = client.post(reverse('templates_list'), post_data)
-        print response
-        self.assertContains(response, 'position')
+        response = self.client.post(reverse('templates_list'), post_data)
+        self.assertEqual(response.status_code, 201)
