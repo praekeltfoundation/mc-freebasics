@@ -1,21 +1,23 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
+from django.http import Http404
 
 from mc2.controllers.base.views import ControllerCreateView, ControllerEditView
 from mc2.views import HomepageView
 from freebasics.forms import FreeBasicsControllerForm
 
-from freebasics.models import FreeBasicsTemplateData
+from freebasics.models import FreeBasicsTemplateData, FreeBasicsController
 from freebasics.serializers import FreeBasicsDataSerializer
 from rest_framework.views import APIView
-from django.http import Http404
 from rest_framework.response import Response
 from rest_framework import status
 
 
 class TemplateDataList(APIView):
     def post(self, request, format=None):
-        serializer = FreeBasicsDataSerializer(data=request.data)
+        controller = FreeBasicsController.objects.create(owner=request.user)
+        data = request.data.update['controller': controller]
+        serializer = FreeBasicsDataSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

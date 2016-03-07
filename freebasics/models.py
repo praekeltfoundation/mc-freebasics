@@ -44,11 +44,3 @@ class FreeBasicsTemplateData(models.Model):
     footer_position = models.IntegerField(default=6)
     controller = models.OneToOneField(
         FreeBasicsController, on_delete=models.CASCADE)
-
-    @staticmethod
-    def pre_save(sender, instance, **kwargs):
-        instance.controller = FreeBasicsController.objects.create()
-
-pre_save.connect(
-    FreeBasicsTemplateData.pre_save, FreeBasicsTemplateData,
-    dispatch_uid="freebasics.models.FreeBasicsTemplateData")

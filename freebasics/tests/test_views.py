@@ -11,12 +11,12 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
     fixtures = ['test_users.json', 'test_social_auth.json']
 
     def setUp(self):
-        self.user = User.objects.create(username='tester', password='tester')
+        self.user = User.objects.get(username='testuser')
         self.maxDiff = None
 
     def test_template_list_post_view(self):
         client = Client()
-        client.login(username='tester', password='tester')
+        client.login(username='tester', password='test')
         response = client.get('/')
         post_data = {
             'site_name': 'example', 'site_name_url': 'https://example.com',
