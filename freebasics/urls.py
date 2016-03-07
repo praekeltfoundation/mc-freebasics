@@ -26,7 +26,8 @@ urlpatterns = patterns(
     url(
         r'^templates/$', login_required(views.TemplateDataList.as_view()),
         name='templates_list'),
-    url(r'^templates/(?P<pk>[0-9]+)/$', views.TemplateDetail.as_view()),
+    url(r'^templates/(?P<pk>[0-9]+)/$', login_required(views.TemplateDetail.as_view()),
+        name='template_detail'),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -17,7 +17,7 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
         self.maxDiff = None
         self.client = Client()
 
-    def test_template_list_post_view(self):
+    def test_template_create_and_delete_view(self):
         self.client.login(username='testuser', password='test')
         post_data = {
             'site_name': 'example', 'site_name_url': 'https://example.com',
@@ -27,3 +27,8 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(FreeBasicsTemplateData.objects.all().count(), 1)
         self.assertEqual(FreeBasicsController.objects.all().count(), 1)
+        pk = FreeBasicsTemplateData.objects.get(site_name='example').pk
+        response = self.client.delete(reverse(
+            'template_detail', kwargs={'pk': pk}))
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(FreeBasicsTemplateData.objects.all().count(), 0)
