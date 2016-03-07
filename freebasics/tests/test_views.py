@@ -5,6 +5,8 @@ from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 
+from freebasics.models import FreeBasicsTemplateData, FreeBasicsController
+
 
 @pytest.mark.django_db
 class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
@@ -23,3 +25,5 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
             'body_font_family': 'helvetica', 'accent1': '', 'accent2': ''}
         response = self.client.post(reverse('templates_list'), post_data)
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(FreeBasicsTemplateData.objects.all().count(), 1)
+        self.assertEqual(FreeBasicsController.objects.all().count(), 1)

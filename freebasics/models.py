@@ -1,6 +1,5 @@
 from django.db import models
 from mc2.controllers.docker.models import DockerController
-from django.db.models.signals import pre_save
 
 
 class FreeBasicsController(DockerController):
