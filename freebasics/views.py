@@ -14,11 +14,6 @@ from rest_framework import status
 
 
 class TemplateDataList(APIView):
-    def get(self, request, format=None):
-        templates = FreeBasicsTemplateData.objects.all()
-        serializer = FreeBasicsDataSerializer(templates, many=True)
-        return Response(serializer.data)
-
     def post(self, request, format=None):
         serializer = FreeBasicsDataSerializer(data=request.data)
         if serializer.is_valid():
