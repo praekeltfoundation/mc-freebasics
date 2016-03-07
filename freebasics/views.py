@@ -41,7 +41,8 @@ class TemplateDetail(APIView):
             serializer = FreeBasicsDataSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(
+                    serializer.data, status=status.HTTP_201_CREATED)
         else:
             template = self.get_object(pk)
             controller = FreeBasicsTemplateData.objects.get(pk=pk).controller
