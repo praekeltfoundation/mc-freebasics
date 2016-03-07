@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url, include
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from freebasics import views
 
@@ -20,4 +21,8 @@ urlpatterns = patterns(
         r'^(?P<controller_pk>\d+)/$',
         views.FreeBasicsControllerEditView.as_view(),
         name='freebasics_edit'),
+    url(r'^templates/$', views.TemplateDataList.as_view(), name='templates_list'),
+    url(r'^templates/(?P<pk>[0-9]+)/$', views.TemplateDetail.as_view()),
 )
+
+urlpatterns = format_suffix_patterns(urlpatterns)
