@@ -569,3 +569,14 @@ a.sidebar-toggle{
 .mobi-prev-box .block-img{
   width: 40px;
 }
+
+.fade {
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
+  -moz-transition: opacity 0.25s ease-in-out;
+  -webkit-transition: opacity 0.25s ease-in-out;
+}
+
+.fade.out {
+  opacity: 0;
+}

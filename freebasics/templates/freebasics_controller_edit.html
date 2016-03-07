@@ -11,7 +11,7 @@
         <ul class="nav nav-pills" id="steps-container">
           <li class="active"><a href="#step1" data-toggle="tab" data-step="1">Site Name</a></li>
           <li><a href="#step2" data-toggle="tab" data-step="2">Customise</a></li>
-          <li><a href="#step3" data-toggle="tab" data-step="3">Template Review</a></li>
+          <li><a href="#step3" class="render-review" data-toggle="tab" data-step="3">Template Review</a></li>
         </ul>
       </div>
     </div>
@@ -44,13 +44,13 @@
           <p>In order to setup a mobi site we need to generate a domain for your site. This wil serve as the
             site URL for your mobi site in the future.</p>
           <br>
-          <input class="form-control input text-center siteinput" name='fname' id="site-input" type="text"
+          <input class="form-control input text-center siteinput fade out" name='fname' id="site-input" type="text"
                  maxlength="30" placeholder="enter your site name">
           <br>
 
           <p><strong>Your mobile site URL will be</strong></p>
 
-          <p>http://<strong><span class='printsite' id='printsite'>your-site-name</span></strong>.molo.site
+          <p id="printsite-wrapper" class="fade out">http://<strong><span class='printsite' id='printsite'>your-site-name</span></strong>.molo.site
           </p>
           <br>
           <button class="btn bg-purple btn-block next">Use this site name</button>
@@ -228,7 +228,7 @@
     <form class="form-horizontal">
       <div class="box-body">
         <div class="form-group">
-          <label class="col-sm-5 control-label">Heading Background Colour</label>
+          <label class="col-sm-5 control-label">Block Border Colour</label>
           <div class="col-sm-7">
             <input type="text" class="form-control color-picker" id="base-bcolor_background-color"
                    value="#f7f7f7" data-color-format="hex">
@@ -382,7 +382,7 @@
 
   <footer class="step-footer">
     <a class="bg-purple btn-default btn prev pull-left" href="#"><i class="fa fa-chevron-left"></i> Previous</a>
-    <a id="button-done" class="bg-purple btn-default btn next pull-right" href="#">Done <i class="fa fa-flag-checkered"></i></a>
+    <a id="button-done" class="bg-purple btn-default btn next pull-right render-review" href="#">Done <i class="fa fa-flag-checkered"></i></a>
   </footer>
 </div>
 </section>

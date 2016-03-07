@@ -69,6 +69,7 @@ var fb = (function($) {
 		setGeneralValues();
 		arrangeBlocks(site.blocks);
 		setStyles();
+        postInit();
 	}
 
 	// callback after sync or async config loaded. If it's async, data will be populated with JSONP callback data
@@ -85,7 +86,7 @@ var fb = (function($) {
 
 		that.$siteinput = $('#site-input');
 		that.$blockContainer = $('#fb-blockcontainer');
-		that.$navBar = $('#steps-container');
+		that.$renderReview = $('.render-review');
 		that.$reviewBox = $('#temp-review-box');
 		that.$buttonDone = $('#button-done');
 
@@ -97,7 +98,8 @@ var fb = (function($) {
 		that.$reviewMobi2.slimScroll({height: that.$reviewMobi2.parent().height() });
 		that.$reviewMobi3.slimScroll({height: that.$reviewMobi3.parent().height() });
 
-		that.$printsite = $('#printsite');
+		that.$printsiteWrapper = $('#printsite-wrapper');
+        that.$printsite = $('#printsite');
 		that.$printsitelabel1 = $('#printsitelabel1');
 		that.$printsitelabel2 = $('#printsitelabel2');
 
@@ -120,9 +122,43 @@ var fb = (function($) {
 
 		that.$siteinput.on('keyup', changeSiteName);
 		that.$blockContainer.on('changeOrder', changeBlockOrder);
-		that.$navBar.on('click', renderReview)
-		that.$buttonDone.on('click', saveConfig )
-	}
+		that.$renderReview.on('click', renderReview);
+        that.$buttonDone.on('click', saveConfig );
+
+        $("input.color-picker").each(function () {
+            var $el = $(this);
+            $el.ColorPickerSliders({
+                size: 'sm',
+                placement: 'bottom',
+                swatches: false,
+                sliders: false,
+                hsvpanel: true,
+                onchange: function () {
+                    $el.trigger('change');
+                }
+            });
+        });
+
+        $("#fb-blockcontainer").sortable({
+            items: "li.fb-block:not(.locked-sect)",
+            placeholder: "sort-highlight",
+            handle: ".handle",
+            forcePlaceholderSize: true,
+            axis: 'y',
+            grid: [ 200, 1 ],
+            scroll: true,
+            scrollSensitivity: 100,
+            //tolerance: "pointer",
+            zIndex: 999999,
+            change: function (event, ui) {
+                $(event.target).trigger('changeOrder');
+            }
+        });
+    }
+
+    function postInit() {
+        $(".fade").removeClass("out");
+    }
 
 	function getUniqueStyleName(cssClass, styleName) {
 		return cssClass + "_" + styleName;
