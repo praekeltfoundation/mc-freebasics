@@ -1,6 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
-from django.http import Http404
+from django.shortcuts import redirect, get_object_or_404
 
 from mc2.controllers.base.views import ControllerCreateView, ControllerEditView
 from mc2.views import HomepageView
@@ -18,10 +17,7 @@ class TemplateDetail(APIView):
     Create, Retrieve, update or delete a template instance.
     """
     def get_object(self, pk):
-        try:
-            return FreeBasicsTemplateData.objects.get(pk=pk)
-        except FreeBasicsTemplateData.DoesNotExist:
-            raise Http404
+        return get_object_or_404(FreeBasicsTemplateData, pk=pk)
 
     def get(self, request, pk, format=None):
         template = self.get_object(pk)
