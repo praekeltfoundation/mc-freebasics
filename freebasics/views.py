@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect
 
 from mc2.controllers.base.views import ControllerCreateView, ControllerEditView
 from mc2.views import HomepageView
@@ -7,47 +7,24 @@ from freebasics.forms import FreeBasicsControllerForm
 
 from freebasics.models import FreeBasicsTemplateData, FreeBasicsController
 from freebasics.serializers import FreeBasicsDataSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+
+from rest_framework import generics
 
 
-class TemplateDetail(APIView):
-    """
-    Create, Retrieve, update or delete a template instance.
-    """
-    def get_object(self, pk):
-        return get_object_or_404(FreeBasicsTemplateData, pk=pk)
+class TemplateDataCreate(generics.ListCreateAPIView):
+    queryset = FreeBasicsTemplateData.objects.all()
+    serializer_class = FreeBasicsDataSerializer
 
-    def get(self, request, pk, format=None):
-        template = self.get_object(pk)
-        serializer = FreeBasicsDataSerializer(template)
-        return Response(serializer.data)
+    def perform_create(self, serializer):
+        print 'perform create'
+        controller = FreeBasicsController.objects.create(
+            owner=self.request.user)
+        serializer.save(controller=controller)
 
-    def delete(self, request, pk, format=None):
-        template = self.get_object(pk)
-        template.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def post(self, request, pk=None, format=None):
-        if not pk:
-            controller = FreeBasicsController.objects.create(
-                owner=request.user)
-            request.data['controller'] = controller
-            serializer = FreeBasicsDataSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(
-                    serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            template = self.get_object(pk)
-            controller = FreeBasicsTemplateData.objects.get(pk=pk).controller
-            request.data['controller'] = controller
-            serializer = FreeBasicsDataSerializer(template, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class TemplateDataManage(generics.RetrieveUpdateDestroyAPIView):
+    queryset = FreeBasicsTemplateData.objects.all()
+    serializer_class = FreeBasicsDataSerializer
 
 
 class FreeBasicsHomepageView(HomepageView):

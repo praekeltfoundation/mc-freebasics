@@ -24,10 +24,10 @@ urlpatterns = patterns(
         views.FreeBasicsControllerEditView.as_view(),
         name='freebasics_edit'),
     url(r'^templates/$',
-        login_required(views.TemplateDetail.as_view()),
-        name='template_detail'),
+        login_required(views.TemplateDataCreate.as_view()),
+        name='template_list'),
     url(r'^templates/(?P<pk>[0-9]+)/$',
-        login_required(views.TemplateDetail.as_view()),
+        login_required(views.TemplateDataManage.as_view()),
         name='template_detail'),
 )
 

@@ -6,6 +6,7 @@ from django.test.client import Client
 from django.core.urlresolvers import reverse
 
 from freebasics.models import FreeBasicsTemplateData, FreeBasicsController
+from urllib import urlencode
 
 
 @pytest.mark.django_db
@@ -23,7 +24,7 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
             'site_name': 'example', 'site_name_url': 'https://example.com',
             'body_background_color': 'purple', 'body_color': 'purple',
             'body_font_family': 'helvetica', 'accent1': '', 'accent2': ''}
-        response = self.client.post(reverse('template_detail'), post_data)
+        response = self.client.post(reverse('template_list'), post_data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(FreeBasicsTemplateData.objects.all().count(), 1)
         self.assertEqual(FreeBasicsController.objects.all().count(), 1)
@@ -35,8 +36,9 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
             'site_name': 'example2', 'site_name_url': 'https://example2.com',
             'body_background_color': 'purple', 'body_color': 'purple',
             'body_font_family': 'helvetica', 'accent1': '', 'accent2': ''}
-        response = self.client.post(reverse(
-            'template_detail', kwargs={'pk': pk}), post_data)
+        response = self.client.put(reverse(
+            'template_detail', kwargs={'pk': pk}), data=urlencode(post_data),
+            content_type='application/x-www-form-urlencoded')
         self.assertEquals(
             FreeBasicsTemplateData.objects.get(pk=pk).site_name, 'example2')
         response = self.client.delete(reverse(
