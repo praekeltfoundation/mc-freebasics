@@ -1,3 +1,4 @@
+import json
 import pytest
 from mc2.controllers.base.tests.base import ControllerBaseTestCase
 from django.contrib.auth.models import User
@@ -6,7 +7,6 @@ from django.test.client import Client
 from django.core.urlresolvers import reverse
 
 from freebasics.models import FreeBasicsTemplateData, FreeBasicsController
-from urllib import urlencode
 
 
 @pytest.mark.django_db
@@ -37,8 +37,8 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
             'body_background_color': 'purple', 'body_color': 'purple',
             'body_font_family': 'helvetica', 'accent1': '', 'accent2': ''}
         response = self.client.put(reverse(
-            'template_detail', kwargs={'pk': pk}), data=urlencode(post_data),
-            content_type='application/x-www-form-urlencoded')
+            'template_detail', kwargs={'pk': pk}), data=json.dumps(post_data),
+            content_type='application/json')
         self.assertEquals(
             FreeBasicsTemplateData.objects.get(pk=pk).site_name, 'example2')
         response = self.client.delete(reverse(
