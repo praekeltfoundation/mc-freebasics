@@ -16,7 +16,6 @@ class TemplateDataCreate(generics.ListCreateAPIView):
     serializer_class = FreeBasicsDataSerializer
 
     def perform_create(self, serializer):
-        print 'perform create'
         controller = FreeBasicsController.objects.create(
             owner=self.request.user)
         serializer.save(controller=controller)
