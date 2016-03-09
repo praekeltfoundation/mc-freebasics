@@ -1,7 +1,7 @@
 var fb = (function($) {
 	var that = this;
 
-	that.serverUrl = '/api_stub/';
+	that.serverUrl = template_data_url;
 	that.useLocalStorage = false;
 
 	var site = {
@@ -82,7 +82,7 @@ var fb = (function($) {
 
 	// callback after sync or async config loaded. If it's async, data will be populated with JSONP callback data
 	function setupConfig(data, textStatus, jqXHR) {
-		if (data) {
+		if (data && data.length > 0) {
 			that.loadedConfig = data;
 		}
         if (!that.loadedConfig) {
@@ -355,14 +355,16 @@ var fb = (function($) {
 	function ajaxErrorLoad(data, textStatus, jqXHR) {
 		var msg = "Could not retrieve config using Ajax call. Reverting to default config.";
         that.$notificationBell.append('<span title="' + msg + '" class="label label-danger">!</span>');
+        console.log(msg);
         // this is clumsy, but I want to avoid any misunderstanding - for dev work only
         $('#global-options-header').html("Global Options: FROM DEFAULT VALUES");
-	}
+    }
 
-	function ajaxErrorSave(data, textStatus, jqXHR) {
-		var msg = "Could not save config using Ajax call";
+    function ajaxErrorSave(data, textStatus, jqXHR) {
+        var msg = "Could not save config using Ajax call";
+        console.log(msg);
         that.$notificationBell.append('<span title="' + msg + '" class="label label-danger">!</span>');
-	}
+    }
 
 	function loadConfigAjax() {
 		return $.ajax({

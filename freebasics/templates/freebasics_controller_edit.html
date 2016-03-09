@@ -1,6 +1,16 @@
 {% extends "skins/base.html"%}
 {% load static from staticfiles %}
 
+{% block extra_js %}
+<script type="text/javascript">
+{% if object %}
+  var template_data_url = '/templates/{{object.pk}}/';
+{% else %}
+  var template_data_url = '/templates/';
+{% endif %}
+</script>
+{% endblock %}
+
 {% block content %}
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" id="stepper">
