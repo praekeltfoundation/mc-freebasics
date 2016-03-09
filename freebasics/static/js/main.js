@@ -56,7 +56,41 @@ var fb = (function($) {
 		}
 	};
 
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    function setupCsrf(){
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                var csrftoken = getCookie('csrftoken');
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    }
+
 	function init() {
+        setupCsrf()
+
 		// TODO: stick this in a pre-init block along with other non-dependents
         that.$notificationBell = $('#notification-bell');
 
@@ -82,6 +116,7 @@ var fb = (function($) {
 
 	// callback after sync or async config loaded. If it's async, data will be populated with JSONP callback data
 	function setupConfig(data, textStatus, jqXHR) {
+        console.log(data)
 		if (data && data.length > 0) {
 			that.loadedConfig = data;
 		}

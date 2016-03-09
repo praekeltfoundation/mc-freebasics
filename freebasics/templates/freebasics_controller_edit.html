@@ -4,7 +4,7 @@
 {% block extra_js %}
 <script type="text/javascript">
 {% if object %}
-  var template_data_url = '/templates/{{object.pk}}/';
+  var template_data_url = '/templates/{{object.freebasicstemplatedata.pk}}/';
 {% else %}
   var template_data_url = '/templates/';
 {% endif %}
