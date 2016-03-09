@@ -402,9 +402,7 @@ var fb = (function($) {
     }
 
 	function loadConfigAjax() {
-		return $.ajax({
-			url: that.serverUrl
-		});
+		return $.ajax({url: that.serverUrl}).then(fromApi);
 	}
 
 	function saveConfigAjax() {
@@ -412,11 +410,21 @@ var fb = (function($) {
 			url: that.serverUrl,
 			type: 'POST',
 			dataType: 'json',
-			data: JSON.stringify(site)
+			data: JSON.stringify(toApi(site))
 		});
 	}
 
+        function fromApi(d) {
+            return d;
+        }
+
+        function toApi(d) {
+            return d;
+        }
+
 	return {
+                fromApi: fromApi,
+                toApi: toApi,
 		init: init,
 		printConfig: printConfig,
 		deleteSavedConfig: deleteSavedConfigLocalStorage
@@ -463,4 +471,9 @@ var fb = (function($) {
 	}
 };*/
 
-fb.init();
+if (typeof exports === 'object' && typeof module === 'object') {
+    module.exports = fb;
+}
+else {
+    fb.init();
+}
