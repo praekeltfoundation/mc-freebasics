@@ -9,6 +9,26 @@ from mc2.controllers.base.views import ControllerCreateView, ControllerEditView
 from mc2.views import HomepageView
 from freebasics.forms import FreeBasicsControllerForm
 
+from freebasics.models import FreeBasicsTemplateData, FreeBasicsController
+from freebasics.serializers import FreeBasicsDataSerializer
+
+from rest_framework import generics
+
+
+class TemplateDataCreate(generics.ListCreateAPIView):
+    queryset = FreeBasicsTemplateData.objects.all()
+    serializer_class = FreeBasicsDataSerializer
+
+    def perform_create(self, serializer):
+        controller = FreeBasicsController.objects.create(
+            owner=self.request.user)
+        serializer.save(controller=controller)
+
+
+class TemplateDataManage(generics.RetrieveUpdateDestroyAPIView):
+    queryset = FreeBasicsTemplateData.objects.all()
+    serializer_class = FreeBasicsDataSerializer
+
 
 class FreeBasicsHomepageView(HomepageView):
 
