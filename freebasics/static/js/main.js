@@ -22,7 +22,7 @@ var fb = (function($) {
 			},
 			"block-heading": {
 				"background-color": "#dfdfdf",
-				"font-family": "\"Montserrat\", Helvetica, sans-serif",
+				"font-family": "\"Open Sans\", Helvetica, sans-serif",
 				"text-transform": "uppercase"
 			},
 			"fb-accent-1": {
@@ -57,8 +57,16 @@ var fb = (function($) {
 	};
 
 	function init() {
-		// use a promise to only continue initialisation when config load complete
-		$.when( loadConfig() ).then( setupConfig );
+		// TODO: stick this in a pre-init block along with other non-dependents
+        that.$notificationBell = $('#notification-bell');
+
+        // use a promise to only continue initialisation when config load complete
+        $.when( loadConfig() )
+            .then( setupConfig )
+            .fail( function(data, textStatus, jqXHR) {
+                ajaxErrorLoad(data, textStatus, jqXHR);
+                setupConfig();
+            });
 	}
 
 	// continue with the rest of initialisation once the config has been loaded
@@ -77,6 +85,10 @@ var fb = (function($) {
 		if (data) {
 			that.loadedConfig = data;
 		}
+        if (!that.loadedConfig) {
+            // fall back to defaults
+            that.loadedConfig = that.siteDefaults;
+        }
 		site = that.loadedConfig;
 		initContinued();
 	}
@@ -341,11 +353,15 @@ var fb = (function($) {
 
     //TODO: Handle errors a lot better and more gracefully. No alerts
 	function ajaxErrorLoad(data, textStatus, jqXHR) {
-		alert("Could not retrieve config using Ajax call");
+		var msg = "Could not retrieve config using Ajax call. Reverting to default config.";
+        that.$notificationBell.append('<span title="' + msg + '" class="label label-danger">!</span>');
+        // this is clumsy, but I want to avoid any misunderstanding - for dev work only
+        $('#global-options-header').html("Global Options: FROM DEFAULT VALUES");
 	}
 
 	function ajaxErrorSave(data, textStatus, jqXHR) {
-		alert("Could not save config using Ajax call");
+		var msg = "Could not save config using Ajax call";
+        that.$notificationBell.append('<span title="' + msg + '" class="label label-danger">!</span>');
 	}
 
 	function loadConfigAjax() {
