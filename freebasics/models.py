@@ -31,7 +31,6 @@ class FreeBasicsTemplateData(models.Model):
         unique=True, max_length=255, blank=True, null=True)
     base_background_color = models.CharField(
         max_length=100, blank=True, null=True)
-    color = models.CharField(max_length=100, blank=True, null=True)
     body_font_family = models.CharField(max_length=100, blank=True, null=True)
     block_background_color = models.CharField(
         max_length=100, blank=True, null=True)

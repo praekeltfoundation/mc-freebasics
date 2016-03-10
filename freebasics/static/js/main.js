@@ -1,9 +1,6 @@
 var fb = (function($) {
 	var that = this;
 
-	that.serverUrl = template_data_url;
-	that.useLocalStorage = false;
-
 	var site = {
 
 		// holds the general config values
@@ -14,7 +11,7 @@ var fb = (function($) {
 
 		// holds the default styles and inputs
 		styles: {
-			"base-bcolor": {
+			"base-color": {
 				"background-color": "#efefef"
 			},
 			"fb-body": {
@@ -88,19 +85,22 @@ var fb = (function($) {
         });
     }
 
-	function init() {
-        setupCsrf()
+	function init(conf) {
+		that.serverUrl = conf.template_data_url;
+		that.isNew = conf.isNew;
+		that.useLocalStorage = false;
+    setupCsrf()
 
 		// TODO: stick this in a pre-init block along with other non-dependents
         that.$notificationBell = $('#notification-bell');
 
-        // use a promise to only continue initialisation when config load complete
-        $.when( loadConfig() )
-            .then( setupConfig )
-            .fail( function(data, textStatus, jqXHR) {
-                ajaxErrorLoad(data, textStatus, jqXHR);
-                setupConfig();
-            });
+    // use a promise to only continue initialisation when config load complete
+    $.when( loadConfig() )
+        .then( setupConfig )
+        .fail( function(data, textStatus, jqXHR) {
+            ajaxErrorLoad(data, textStatus, jqXHR);
+            setupConfig();
+        });
 	}
 
 	// continue with the rest of initialisation once the config has been loaded
@@ -116,7 +116,6 @@ var fb = (function($) {
 
 	// callback after sync or async config loaded. If it's async, data will be populated with JSONP callback data
 	function setupConfig(data, textStatus, jqXHR) {
-        console.log(data)
 		if (data && data.length > 0) {
 			that.loadedConfig = data;
 		}
@@ -357,7 +356,11 @@ var fb = (function($) {
 		if (that.useLocalStorage) {
 			that.loadedConfig = JSON.parse(getSavedConfigLocalStorage());
 			return true;
-		} else {
+		}
+		else if (that.isNew) {
+		 return _.clone(that.siteDefaults);
+	 }
+		else {
 			return loadConfigAjax();
 		}
 	}
@@ -415,11 +418,73 @@ var fb = (function($) {
 	}
 
         function fromApi(d) {
-            return d;
+					return {
+						general: {
+							siteName: d.site_name,
+							siteNameUrl: d.site_name_url
+						},
+						styles: {
+							"base-color": {
+								"background-color": d.base_background_color
+							},
+							"fb-body": {
+								"font-family": d.body_font_family
+							},
+							"block-heading": {
+								"background-color": d.block_background_color,
+								"font-family": d.block_font_family,
+								"text-transform": d.text_transform
+							},
+							"fb-accent-1": {
+								"color": d.accent1
+							},
+							"fb-accent-2": {
+								"color": d.accent2
+							}
+						},
+
+						// default position and state of the blocks
+						blocks: {
+							"fb-block-header": { // corresponds with the id of the sortable block
+								position: d.header_position
+							},
+							"fb-block-article":{
+								position: d.article_position
+							},
+							"fb-block-banner": {
+								position: d.banner_position
+							},
+							"fb-block-category": {
+								position: d.category_position
+							},
+							"fb-block-poll": {
+								position: d.poll_position
+							},
+							"fb-block-footer": {
+								position: d.footer_position
+							}
+						}
+					};
         }
 
         function toApi(d) {
-            return d;
+            return {
+							'site_name': d.general.siteName,
+							'site_name_url': d.general.siteNameUrl,
+							'base_background_color': d.styles["base-color"]["background-color"],
+				      'body_font_family': d.styles["fb-body"]["font-family"],
+							'block_background_color': d.styles["block-heading"]["background-color"],
+				      'block_font_family': d.styles["block-heading"]["font-family"],
+							'text_transform': d.styles["block-heading"]["text-transform"],
+							'accent1': d.styles["fb-accent-1"].color,
+							'accent2': d.styles["fb-accent-2"].color,
+				      'header_position': d.blocks["fb-block-header"].position,
+							'article_position': d.blocks["fb-block-article"].position,
+							'banner_position': d.blocks["fb-block-banner"].position,
+				      'category_position': d.blocks["fb-block-category"].position,
+							'poll_position': d.blocks["fb-block-poll"].position,
+							'footer_position': d.blocks["fb-block-footer"].position
+						};
         }
 
 	return {
@@ -473,7 +538,4 @@ var fb = (function($) {
 
 if (typeof exports === 'object' && typeof module === 'object') {
     module.exports = fb;
-}
-else {
-    fb.init();
 }
