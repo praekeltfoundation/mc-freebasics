@@ -3,18 +3,20 @@ from mc2.controllers.docker.models import DockerController
 
 
 class FreeBasicsController(DockerController):
-    TEMPLATE_CHOICES = (
-        ("option1", "molo-tuneme"),
-        ("option2", "molo-ndohyep"),
-    )
-    TEMPLATE_MARATHON_CMD = {
-        "option1": "./deploy/docker-entrypoint.sh tuneme tuneme.wsgi 8000",
-        "option2": "./deploy/docker-entrypoint.sh bwise ndohyep.wsgi 8000"
-    }
-    DEFAULT_PORT = 8000
-    selected_template = models.CharField(
-        default=TEMPLATE_CHOICES[0][1], max_length=100, blank=False,
-        null=False)
+
+    def get_marathon_app_data(self):
+        data = super(FreeBasicsController, self).get_marathon_app_data()
+
+        env_data = {}
+        if self.env_variables.exists():
+            env_data.update(dict([
+                (env.key, env.value)
+                for env in self.env_variables.all()]))
+
+        if self.freebasicstemplatedata:
+            env_data.update(self.freebasicstemplatedata.to_env_dict())
+        data.update({'env': env_data})
+        return data
 
     @property
     def app_id(self):
@@ -27,7 +29,7 @@ class FreeBasicsController(DockerController):
 class FreeBasicsTemplateData(models.Model):
     site_name = models.CharField(
         unique=True, max_length=100, blank=True, null=True)
-    site_name_url = models.URLField(
+    site_name_url = models.CharField(
         unique=True, max_length=255, blank=True, null=True)
     body_background_color = models.CharField(
         max_length=100, blank=True, null=True)
@@ -43,3 +45,15 @@ class FreeBasicsTemplateData(models.Model):
     footer_position = models.IntegerField(default=6)
     controller = models.OneToOneField(
         FreeBasicsController, on_delete=models.CASCADE)
+
+    def to_env_dict(self):
+        return {
+            'CUSTOM_CSS_BODY_BACKGROUND_COLOR': self.body_background_color,
+            'CUSTOM_CSS_BODY_FONT_COLOR': self.body_color,
+            'CUSTOM_CSS_BODY_FONT': self.body_font_family,
+            'CUSTOM_CSS_ACCENT_1': self.body_font_family,
+            'CUSTOM_CSS_ACCENT_2': self.body_font_family,
+            'BLOCK_POSITION_BANNER': self.banner_position,
+            'BLOCK_POSITION_LATEST': self.article_position,
+            'BLOCK_POSITION_QUESTIONS': self.poll_position,
+            'BLOCK_POSITION_SECTIONS': self.category_position}
