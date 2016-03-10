@@ -1,10 +1,13 @@
 import json
 import pytest
+import responses
+
 from mc2.controllers.base.tests.base import ControllerBaseTestCase
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 from freebasics.models import FreeBasicsTemplateData, FreeBasicsController
 
@@ -18,7 +21,10 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
         self.maxDiff = None
         self.client = Client()
 
+    @responses.activate
     def test_template_create_and_delete_view(self):
+        self.mock_create_marathon_app()
+
         self.client.login(username='testuser', password='test')
         post_data = {
             'site_name': 'example', 'site_name_url': 'https://example.com',
@@ -32,6 +38,10 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
         response = self.client.get(reverse(
             'template_detail', kwargs={'pk': pk}))
         self.assertEquals(response.data['site_name'], 'example')
+
+        self.mock_update_marathon_app(
+            FreeBasicsController.objects.all().first().app_id)
+
         post_data = {
             'site_name': 'example2', 'site_name_url': 'https://example2.com',
             'body_background_color': 'purple', 'body_color': 'purple',
@@ -45,3 +55,67 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
             'template_detail', kwargs={'pk': pk}))
         self.assertEqual(response.status_code, 204)
         self.assertEqual(FreeBasicsTemplateData.objects.all().count(), 0)
+
+    @responses.activate
+    def test_marathon_app_data(self):
+        self.mock_create_marathon_app()
+
+        self.client.login(username='testuser', password='test')
+        post_data = {
+            'site_name': 'example', 'site_name_url': 'example',
+            'body_background_color': 'purple', 'body_color': 'purple',
+            'body_font_family': 'helvetica', 'accent1': '', 'accent2': ''}
+        response = self.client.post(reverse('template_list'), post_data)
+
+        self.assertEqual(response.status_code, 201)
+
+        controller = FreeBasicsController.objects.all().first()
+
+        self.assertEquals(controller.get_marathon_app_data(), {
+            "id": controller.app_id,
+            "cpus": 0.1,
+            "mem": 128.0,
+            "instances": 1,
+            "labels": {
+                "domain": u"{}.{} {}".format(controller.app_id,
+                                             settings.HUB_DOMAIN,
+                                             'example.molo.site'),
+                "name": u"example",
+            },
+            'env': {
+                'BLOCK_POSITION_BANNER': 3,
+                'BLOCK_POSITION_LATEST': 2,
+                'BLOCK_POSITION_QUESTIONS': 5,
+                'BLOCK_POSITION_SECTIONS': 4,
+                'CUSTOM_CSS_ACCENT_1': u'helvetica',
+                'CUSTOM_CSS_ACCENT_2': u'helvetica',
+                'CUSTOM_CSS_BODY_BACKGROUND_COLOR': u'purple',
+                'CUSTOM_CSS_BODY_FONT': u'helvetica',
+                'CUSTOM_CSS_BODY_FONT_COLOR': u'purple'},
+            "container": {
+                "type": "DOCKER",
+                "docker": {
+                    "image": u"praekeltfoundation/molo-freebasics",
+                    "forcePullImage": True,
+                    "network": "BRIDGE",
+                    "portMappings": [{"containerPort": 80, "hostPort": 0}],
+                    "parameters": [
+                        {"key": "volume-driver", "value": "xylem"},
+                        {
+                            "key": "volume",
+                            "value":
+                                "%s_media:/deploy/media/" % controller.app_id
+                        }]
+                }
+            },
+            "ports": [0],
+            "healthChecks": [{
+                "gracePeriodSeconds": 3,
+                "intervalSeconds": 10,
+                "maxConsecutiveFailures": 3,
+                "path": u'/health/',
+                "portIndex": 0,
+                "protocol": "HTTP",
+                "timeoutSeconds": 5
+            }]
+        })
