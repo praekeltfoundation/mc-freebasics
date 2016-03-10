@@ -20,6 +20,7 @@
   <link href="{% static 'css/AdminLTE.min.css' %}" rel="stylesheet">
   <!-- Free Basics Incubator style -->
   <link href="{% static 'css/fb-incubator.css' %}" rel="stylesheet">
+  <link href="{% static 'css/template-base.css' %}" rel="stylesheet">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,7 +55,7 @@
         <!-- Notifications Menu -->
         <li class="dropdown notifications-menu">
           <!-- Menu toggle button -->
-          <a href="#">
+          <a href="#" id="notification-bell">
             <i class="fa fa-bell-o"></i>
           </a>
         </li>
@@ -109,14 +110,16 @@
 
 <script src="{% static 'js/tinycolor.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.colorpickersliders.nocielch.min.js' %}"></script>
-
+<!-- Google Fonts -->
+<script src="{% static 'js/webfont.js' %}"></script>
 <!-- Underscore 1.8.3 -->
 <script src="{% static 'js/underscore-1.8.3.js' %}"></script>
 
 <!-- AdminLTE App -->
 <script src="{% static 'js/app.min.js' %}"></script>
-<script src="{% static 'js/fb-incubator.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/fb-incubator.js' %}"></script>
+{% block extra_js %}{% endblock %}
 
 </body>
 </html>

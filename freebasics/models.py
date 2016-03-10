@@ -31,18 +31,21 @@ class FreeBasicsTemplateData(models.Model):
         unique=True, max_length=100, blank=True, null=True)
     site_name_url = models.CharField(
         unique=True, max_length=255, blank=True, null=True)
-    body_background_color = models.CharField(
+    base_background_color = models.CharField(
         max_length=100, blank=True, null=True)
-    body_color = models.CharField(max_length=100, blank=True, null=True)
     body_font_family = models.CharField(max_length=100, blank=True, null=True)
+    block_background_color = models.CharField(
+        max_length=100, blank=True, null=True)
+    block_font_family = models.CharField(max_length=100, blank=True, null=True)
+    text_transform = models.CharField(max_length=100, blank=True, null=True)
     accent1 = models.CharField(max_length=100, blank=True, null=True)
     accent2 = models.CharField(max_length=100, blank=True, null=True)
-    header_position = models.IntegerField(default=1)
-    article_position = models.IntegerField(default=2)
-    banner_position = models.IntegerField(default=3)
-    category_position = models.IntegerField(default=4)
-    poll_position = models.IntegerField(default=5)
-    footer_position = models.IntegerField(default=6)
+    header_position = models.IntegerField(default=0)
+    article_position = models.IntegerField(default=1)
+    banner_position = models.IntegerField(default=2)
+    category_position = models.IntegerField(default=3)
+    poll_position = models.IntegerField(default=4)
+    footer_position = models.IntegerField(default=5)
     controller = models.OneToOneField(
         FreeBasicsController, on_delete=models.CASCADE)
 

@@ -1,7 +1,7 @@
 from mc2.settings import *
 from os import environ
 
-INSTALLED_APPS = ('freebasics', ) + INSTALLED_APPS
+INSTALLED_APPS = ('freebasics', 'rest_framework') + INSTALLED_APPS
 
 CELERY_IMPORTS += ('freebasics.tasks', )
 
