@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('freebasics', '0002_freebasicstemplatedata'),
+        ('freebasics', '0004_remove_freebasicstemplatedata_color'),
     ]
 
     operations = [

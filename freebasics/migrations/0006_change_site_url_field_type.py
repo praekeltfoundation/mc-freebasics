@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('freebasics', '0003_remove_selected_template_field'),
+        ('freebasics', '0005_remove_selected_template_field'),
     ]
 
     operations = [
