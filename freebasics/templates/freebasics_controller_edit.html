@@ -1,4 +1,5 @@
 {% extends "skins/base.html"%}
+{% load static from staticfiles %}
 
 {% block content %}
   <!-- Content Wrapper. Contains page content -->
@@ -10,7 +11,7 @@
         <ul class="nav nav-pills" id="steps-container">
           <li class="active"><a href="#step1" data-toggle="tab" data-step="1">Site Name</a></li>
           <li><a href="#step2" data-toggle="tab" data-step="2">Customise</a></li>
-          <li><a href="#step3" data-toggle="tab" data-step="3">Template Review</a></li>
+          <li><a href="#step3" class="render-review" data-toggle="tab" data-step="3">Template Review</a></li>
         </ul>
       </div>
     </div>
@@ -25,330 +26,383 @@
   <!-- Main content -->
   <section class="content stepper-content">
 
-  <div class="tab-content">
-  <div class="tab-pane fade active in" id="step1">
-
-    <div class="floater-head">
-      <h1>
-        Site Name
-        <small>Give your mobie site a name</small>
-      </h1>
-    </div>
-
-    <div class="center-block">
-      <div class="box box-primary">
-        <div class="box-body row row-centered">
-          <div class="spacer"></div>
-          <div class="col-md-10 col-centered text-center">
-            <p>In order to setup a mobi site we need to generate a domain for your site. This wil serve as the
-              site URL for your mobi site in the future.</p>
-            <br>
-            <input class="form-control input text-center siteinput" name='fname' id="site-input" type="text"
-                   maxlength="30" placeholder="enter your site name">
-            <br>
-
-            <p><strong>Your mobile site URL will be</strong></p>
-
-            <p>http://<strong><span class='printsite' id='printsite'>your-site-name</span></strong>.molo.site
-            </p>
-            <br>
-            <button class="btn bg-purple btn-block next">Use this site name</button>
-            <div class="spacer"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <footer class="step-footer">
-      <a class="bg-purple btn-default btn next pull-right" href="#">Next <i class="fa fa-chevron-right"></i></a>
-    </footer>
-
-  </div>
-  <div class="tab-pane fade" id="step2">
+<div class="tab-content">
+<div class="tab-pane fade in active" id="step1">
 
   <div class="floater-head">
     <h1>
-      Customise
-      <small>Customise your template</small>
+      Site Name
+      <small>Give your mobie site a name</small>
     </h1>
   </div>
 
-  <div class="row center-block-1200">
-
-  <div class="col-md-6">
-    <!-- TO DO List -->
+  <div class="center-block">
     <div class="box box-primary">
-      <div class="box-header with-border">
-        <h3 class="box-title">Select section to edit</h3>
+      <div class="box-body row row-centered">
+        <div class="spacer"></div>
+        <div class="col-md-10 col-centered text-center">
+          <p>In order to setup a mobi site we need to generate a domain for your site. This wil serve as the
+            site URL for your mobi site in the future.</p>
+          <br>
+          <input class="form-control input text-center siteinput fade out" name='fname' id="site-input" type="text"
+                 maxlength="30" placeholder="enter your site name">
+          <br>
+
+          <p><strong>Your mobile site URL will be</strong></p>
+
+          <p id="printsite-wrapper" class="fade out">http://<strong><span class='printsite' id='printsite'>your-site-name</span></strong>.molo.site
+          </p>
+          <br>
+          <button class="btn bg-purple btn-block next">Use this site name</button>
+          <div class="spacer"></div>
+        </div>
       </div>
-      <!-- /.box-header -->
-      <div class="box-body">
+    </div>
+  </div>
 
-        <ul id="fb-blockcontainer" class="todo-list">
+  <footer class="step-footer">
+    <a class="bg-purple btn-default btn next pull-right" href="#">Next <i class="fa fa-chevron-right"></i></a>
+  </footer>
 
-          <li id="fb-block-header" class="fb-block locked-sect">
-            <span class="pull-right lock">
-              <i class="fa fa-lock"></i>
-            </span>
-            <span class="text">Header Block</span>
+</div>
+<div class="tab-pane fade" id="step2">
 
-            <div class="grab-sect sect-head fb-body">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="sect-logo col-md-8">
-                    <i class="fa fa-cubes no-fb-body"></i>&nbsp;
-                    <span id="printsitelabel1">
-                      <strong>Your Site Logo</strong>
-                    </span>
-                  </div>
-                  <div class="sect-menu pull-right col-md-4">
-                   <span class="pull-right">Menu <i
-                       class="fa fa-bars no-fb-body"></i></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
+<div class="floater-head">
+  <h1>
+    Customise
+    <small>Customise your template</small>
+  </h1>
+</div>
 
-          <li id="fb-block-article" class="fb-block">
-            <span class="handle pull-right">
-              <i class="fa fa-arrows"></i>
-            </span>
-            <span class="text">Article Block</span>
+<div class="row center-block-1200">
 
-            <div class="grab-sect sect-art fb-body">
-              <h6>Heading</h6>
+<div class="col-md-6">
+  <!-- TO DO List -->
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Select section to edit</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
 
-              <p>Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel
-                augue laoreet rutrum faucibus dolor auctor. Sed posuere consectetur est
-                at lobortis. Donec id elit non mi porta gravida at eget metus.</p>
+      <ul id="fb-blockcontainer" class="todo-list">
 
-              <p><strong class="fb-accent-1">Accented Text 1</strong></p>
-
-              <p><strong class="fb-accent-2">Accented Text 2</strong></p>
-            </div>
-          </li>
-          <li id="fb-block-banner" class="fb-block">
-            <span class="handle pull-right">
-            <i class="fa fa-arrows"></i>
-            </span>
-            <span class="text">Banner Block</span>
-
-            <div class="grab-sect sect-banner fb-body">
-
-            </div>
-          </li>
-          <li id="fb-block-category" class="fb-block">
-            <span class="handle pull-right">
-            <i class="fa fa-arrows"></i>
-            </span>
-            <span class="text">Category Block</span>
-
-            <div class="grab-sect sect-cat fb-body">
-              <ul>
-                <li>
-                  <h6>Category 1</h6>
-                </li>
-                <li>
-                  <h6>Category 2</h6>
-                </li>
-                <li>
-                  <h6>Category 3</h6>
-                </li>
-                <li>
-                  <h6>Category 4</h6>
-                </li>
-                <li>
-                  <h6>Category 6</h6>
-                </li>
-                <li>
-                  <h6>Category 7</h6>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li id="fb-block-poll" class="fb-block">
-            <span class="handle pull-right">
-            <i class="fa fa-arrows"></i>
-            </span>
-            <span class="text">Poll Block</span>
-
-            <div class="grab-sect sect-poll fb-body">
-              <h6>Poll Heading</h6>
-
-              <div class="form-group">
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="optionsRadios" id="optionsRadios1"
-                           value="option1" checked="">
-                    Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-                  </label>
-                </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="optionsRadios" id="optionsRadios2"
-                           value="option2" disabled="">
-                    Aenean lacinia bibendum nulla sed consectetur.
-                  </label>
-                </div>
-              </div>
-            </div>
-          </li>
-
-          <li id="fb-block-footer" class="fb-block locked-sect">
-            <span class="pull-right lock">
+        <li id="fb-block-header" class="fb-block locked-sect">
+          <span class="pull-right lock">
             <i class="fa fa-lock"></i>
-            </span>
-            <span class="text">Footer Block</span>
+          </span>
+          <span class="text">Header Block</span>
 
-            <div class="grab-sect sect-foot fb-body">
-              <p>&copy; 2016 <span id="printsitelabel2"><strong>Your Site
-                Name</strong></span> | All rights reserved.</p>
+          <div class="grab-sect block-header no-fb-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="block-logo pull-left">
+                  <div class="logo-placeholder"></div>&nbsp;
+                  <span id="printsitelabel1">
+                    <strong>Your Site Logo</strong>
+                  </span>
+                </div>
+                <div class="block-menu pull-right fb-body">
+                 <span class="pull-right fb-accent-1">Menu</span>
+                </div>
+              </div>
             </div>
-          </li>
+          </div>
+        </li>
 
-        </ul>
+        <li id="fb-block-article" class="fb-block">
+          <span class="handle pull-right">
+            <i class="fa fa-arrows"></i>
+          </span>
+          <span class="text">Article Block</span>
+          <div class="fb-body">
+            <div class="base-bcolor">
+              <div class="grab-sect block-article fb-body fb-card">
+                <h6 class="block-heading fb-accent-1">Article</h6>
+                <img alt="" class="block-img" height="250" src="{% static 'img/sample-img-sml.png' %}" width="250">
+                <h6 class="sub-heading">Sub Heading</h6>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel
+                  augue laoreet rutrum faucibus dolor auctor posuere consectetur est...</p>
+
+                <p class="fb-accent-2 link-button">Read More</p>
+
+              </div>
+            </div>
+          </div>
+        </li>
+        <li id="fb-block-banner" class="fb-block list-block">
+          <span class="handle pull-right">
+          <i class="fa fa-arrows"></i>
+          </span>
+          <span class="text">Banner Block</span>
+          <div class="fb-body">
+            <div class="base-bcolor">
+              <div class="grab-sect block-banner no-fb-body fb-card">
+              </div>
+            </div>
+          </div>
+        </li>
+        <li id="fb-block-category" class="fb-block">
+          <span class="handle pull-right">
+          <i class="fa fa-arrows"></i>
+          </span>
+          <span class="text">Category Block</span>
+          <div class="fb-body">
+            <div class="base-bcolor">
+              <div class="grab-sect block-category fb-body fb-card">
+                <h6 class="block-heading fb-accent-1">Categories<span class="pull-right see-more fb-accent-2">See more</span></h6>
+                <ul>
+                  <li>
+                    <h6 class="fb-accent-2">Category Title 1</h6>
+                  </li>
+                  <li>
+                    <h6 class="fb-accent-2">Category Title 2</h6>
+                  </li>
+                  <li>
+                    <h6 class="fb-accent-2">Category Title 3</h6>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li id="fb-block-poll" class="fb-block">
+          <span class="handle pull-right">
+          <i class="fa fa-arrows"></i>
+          </span>
+          <span class="text">Poll</span>
+          <div class="fb-body">
+            <div class="base-bcolor">
+              <div class="grab-sect block-poll fb-body  fb-card">
+                <h6 class="block-heading fb-accent-1">Poll<span class="pull-right see-more fb-accent-2">See more</span></h6>
+                <h6 class="sub-heading">Sub Heading</h6>
+                <div class="form-group">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="optionsRadios" id="optionsRadios1"
+                             value="option1" checked="">
+                      Cras justo odio, dapibus ac facilisis quam.
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="optionsRadios" id="optionsRadios2"
+                             value="option2" disabled="">
+                      Aenean lacinia bibendum nulla sed consectetur.
+                    </label>
+                  </div>
+                  <p class="fb-accent-2 link-button">Vote Now</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li id="fb-block-footer" class="fb-block locked-sect">
+          <span class="pull-right lock">
+          <i class="fa fa-lock"></i>
+          </span>
+          <span class="text">Footer Block</span>
+
+          <div class="grab-sect block-footer no-fb-body">
+            <p>&copy; 2016 <span id="printsitelabel2"><strong>Your Site
+              Name</strong></span> | All rights reserved.</p>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+  <div class="spacer"></div>
+</div>
+<div class="col-md-6">
+  <!-- Horizontal Form -->
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title" id="global-options-header">Global Options</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form class="form-horizontal">
+      <div class="box-body">
+        <div class="form-group">
+          <label class="col-sm-5 control-label">Block Border Colour</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control color-picker" id="base-bcolor_background-color"
+                   value="#f7f7f7" data-color-format="hex">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-5 control-label">Body Font</label>
+          <div class="col-sm-7">
+            <select class="form-control" id="fb-body_font-family">
+              <option>Arial, Helvetica, sans-serif</option>
+              <option>"Courier New", Courier, monospace</option>
+              <option>"Work Sans", Helvetica, sans-serif</option>
+              <option>"Roboto", Courier, monospace</option>
+              <option>"Bangers", Helvetica, sans-serif</option>
+              <option>"Orbitron", Courier, monospace</option>
+              <option>"Pacifico", Helvetica, sans-serif</option>
+              <option>"Passion One", Courier, monospace</option>
+              <option>"Yanone Kaffeesatz", Helvetica, sans-serif</option>
+              <option>"Montserrat", Courier, monospace</option>
+              <option>"Fjalla One", Helvetica, sans-serif</option>
+              <option>"Oswald", Courier, monospace</option>
+              <option>"Open Sans", Helvetica, sans-serif</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-5 control-label">Heading Font</label>
+          <div class="col-sm-7">
+            <select class="form-control fonts" id="block-heading_font-family">
+              <option>Arial, Helvetica, sans-serif</option>
+              <option>"Courier New", Courier, monospace</option>
+              <option>"Work Sans", Helvetica, sans-serif</option>
+              <option>"Roboto", Courier, monospace</option>
+              <option>"Bangers", Helvetica, sans-serif</option>
+              <option>"Orbitron", Courier, monospace</option>
+              <option>"Pacifico", Helvetica, sans-serif</option>
+              <option>"Passion One", Courier, monospace</option>
+              <option>"Yanone Kaffeesatz", Helvetica, sans-serif</option>
+              <option>"Montserrat", Courier, monospace</option>
+              <option>"Fjalla One", Helvetica, sans-serif</option>
+              <option>"Oswald", Courier, monospace</option>
+              <option>"Open Sans", Helvetica, sans-serif</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-5 control-label">Heading Capitalization</label>
+          <div class="col-sm-7">
+            <select class="form-control" id="block-heading_text-transform">
+              <option>uppercase</option>
+              <option>lowercase</option>
+              <option>capitalize</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-5 control-label">Heading Background Colour</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control color-picker" id="block-heading_background-color"
+                   value="#f7f7f7" data-color-format="hex">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-5 control-label">Accent Colour 1</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control color-picker" id="fb-accent-1_color" value="#4383CD"
+                   data-color-format="hex">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-5 control-label">Accent Colour 2</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control color-picker" id="fb-accent-2_color" value="#97ee7b"
+                   data-color-format="hex">
+          </div>
+        </div>
       </div>
       <!-- /.box-body -->
-    </div>
-    <!-- /.box -->
-    <div class="spacer"></div>
+    </form>
   </div>
-  <div class="col-md-6">
-    <!-- Horizontal Form -->
-    <div class="box">
-      <div class="box-header with-border">
-        <h3 class="box-title">Global Options</h3>
+  <!-- /.box -->
+</div>
+<!--/.col (right) -->
+
+</div>
+
+<footer class="step-footer">
+  <a class="bg-purple btn-default btn prev pull-left" href="#"><i class="fa fa-chevron-left"></i> Previous</a>
+  <a class="bg-purple btn-default btn next pull-right" href="#">Next <i class="fa fa-chevron-right"></i></a>
+</footer>
+
+</div>
+<div class="tab-pane fade" id="step3">
+
+  <div class="floater-head">
+    <h1>
+      Template Review
+      <small>Optional description</small>
+    </h1>
+  </div>
+
+  <div class="row center-block-1000">
+
+    <div class="col-md-5 fixed-center fixed-400">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Template Review</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body fb-body">
+          <div id="temp-review-box" class="temp-review-box base-bcolor">
+          </div>
+        </div>
       </div>
-      <!-- /.box-header -->
-      <!-- form start -->
-      <form class="form-horizontal">
-        <div class="box-body">
-          <div class="form-group">
-            <label class="col-sm-5 control-label">Background Colour</label>
+    </div>
 
-            <div class="col-sm-7">
-              <input type="text" class="form-control color-picker" id="fb-body_background-color"
-                     value="#ffffff" data-color-format="hex">
+    <div class="col-md-7 fixed-center fixed-580">
+      <div class="box box-primary fb-body">
+        <div class="box-header with-border">
+          <h3 class="box-title">Device Previews</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body mobi-prev-box">
+          <div class="col-md-6">
+            <div class="mobi-prev-1 mobi-prev">
+              <div id="review-mobi-prev-1-wrapper">
+                <div id="review-mobi-prev-1" class="base-bcolor">
+                </div>
+              </div>
+            </div>
+            <div class="mobi-prev-2 mobi-prev">
+              <div id="review-mobi-prev-2-wrapper">
+                <div id="review-mobi-prev-2" class="base-bcolor">
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-5 control-label">Text Colour</label>
-
-            <div class="col-sm-7">
-              <input type="text" class="form-control color-picker" id="fb-body_color" value="#000000"
-                     data-color-format="hex">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-5 control-label">Body Font</label>
-
-            <div class="col-sm-7">
-              <select class="form-control" id="fb-body_font-family">
-                <option>Arial, Helvetica, sans-serif</option>
-                <option>"Times New Roman", Times, serif</option>
-                <option>"Courier New", Courier, monospace</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-5 control-label">Accent Colour 1</label>
-
-            <div class="col-sm-7">
-              <input type="text" class="form-control color-picker" id="fb-accent-1_color" value="#4383CD"
-                     data-color-format="hex">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-5 control-label">Accent Colour 2</label>
-
-            <div class="col-sm-7">
-              <input type="text" class="form-control color-picker" id="fb-accent-2_color" value="#97ee7b"
-                     data-color-format="hex">
+          <div class="col-md-6">
+            <div class="mobi-prev-3 mobi-prev">
+              <div id="review-mobi-prev-3-wrapper">
+                <div id="review-mobi-prev-3" class="base-bcolor">
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <!-- /.box-body -->
-      </form>
+      </div>
+      <div class="spacer"></div>
     </div>
-    <!-- /.box -->
-  </div>
-  <!--/.col (right) -->
-
   </div>
 
   <footer class="step-footer">
     <a class="bg-purple btn-default btn prev pull-left" href="#"><i class="fa fa-chevron-left"></i> Previous</a>
-    <a class="bg-purple btn-default btn next pull-right" href="#">Next <i class="fa fa-chevron-right"></i></a>
+    <a id="button-done" class="bg-purple btn-default btn next pull-right render-review" href="#">Done <i class="fa fa-flag-checkered"></i></a>
   </footer>
-
-  </div>
-  <div class="tab-pane fade" id="step3">
-
-    <div class="floater-head">
-      <h1>
-        Template Review
-        <small>Optional description</small>
-      </h1>
-    </div>
-
-    <div class="row center-block-1000">
-
-      <div class="col-md-5 fixed-center fixed-400">
-        <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title">Template Review</h3>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            <div id="temp-review-box" class="temp-review-box fb-body">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-7 fixed-center fixed-580">
-        <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title">Device Previews</h3>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body mobi-prev-box">
-            <div class="col-md-6">
-              <div class="mobi-prev-1 mobi-prev">
-                <div id="review-mobi-prev-1-wrapper">
-                  <div id="review-mobi-prev-1">
-                  </div>
-                </div>
-              </div>
-              <div class="mobi-prev-2 mobi-prev">
-                <div id="review-mobi-prev-2-wrapper">
-                  <div id="review-mobi-prev-2">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="mobi-prev-3 mobi-prev">
-                <div id="review-mobi-prev-3-wrapper">
-                  <div id="review-mobi-prev-3">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="spacer"></div>
-      </div>
-    </div>
-
-    <footer class="step-footer">
-      <a class="bg-purple btn-default btn prev pull-left" href="#"><i class="fa fa-chevron-left"></i> Previous</a>
-      <a class="bg-purple btn-default btn next pull-right" href="{% url 'home' %}">Done <i class="fa fa-flag-checkered"></i></a>
-    </footer>
-  </div>
-  </section>
+</div>
+</section>
   <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+{% if object %}
+  fb.init( {
+      isNew: false,
+      template_data_url: '/templates/{{object.freebasicstemplatedata.pk}}/'
+  })
+{% else %}
+  fb.init( {
+    isNew: true,
+    template_data_url: '/templates/'
+  })
+{% endif %}
+</script>
 {% endblock %}
