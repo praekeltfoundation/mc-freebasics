@@ -51,11 +51,13 @@ class FreeBasicsTemplateData(models.Model):
 
     def to_env_dict(self):
         return {
-            'CUSTOM_CSS_BODY_BACKGROUND_COLOR': self.body_background_color,
-            'CUSTOM_CSS_BODY_FONT_COLOR': self.body_color,
-            'CUSTOM_CSS_BODY_FONT': self.body_font_family,
-            'CUSTOM_CSS_ACCENT_1': self.body_font_family,
-            'CUSTOM_CSS_ACCENT_2': self.body_font_family,
+            'CUSTOM_CSS_BASE_BACKGROUND_COLOR': self.base_background_color,
+            'CUSTOM_CSS_BODY_FONT_FAMILY': self.body_font_family,
+            'CUSTOM_CSS_BLOCK_BACKGROUND_COLOR': self.block_background_color,
+            'CUSTOM_CSS_BLOCK_FONT_FAMILY': self.block_font_family,
+            'CUSTOM_CSS_BLOCK_TEXT_TRANSFORM': self.text_transform,
+            'CUSTOM_CSS_ACCENT_1': self.accent1,
+            'CUSTOM_CSS_ACCENT_2': self.accent2,
             'BLOCK_POSITION_BANNER': self.banner_position,
             'BLOCK_POSITION_LATEST': self.article_position,
             'BLOCK_POSITION_QUESTIONS': self.poll_position,

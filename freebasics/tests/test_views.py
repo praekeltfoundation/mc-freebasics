@@ -63,8 +63,11 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
         self.client.login(username='testuser', password='test')
         post_data = {
             'site_name': 'example', 'site_name_url': 'example',
-            'body_background_color': 'purple', 'body_color': 'purple',
-            'body_font_family': 'helvetica', 'accent1': '', 'accent2': ''}
+            'base_background_color': 'purple',
+            'block_background_color': 'teal',
+            'body_font_family': 'helvetica', 'accent1': 'blue',
+            'accent2': 'green', 'text_transform': 'uppercase',
+            'block_font_family': 'arial'}
         response = self.client.post(reverse('template_list'), post_data)
 
         self.assertEqual(response.status_code, 201)
@@ -83,15 +86,17 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                 "name": u"example",
             },
             'env': {
-                'BLOCK_POSITION_BANNER': 3,
-                'BLOCK_POSITION_LATEST': 2,
-                'BLOCK_POSITION_QUESTIONS': 5,
-                'BLOCK_POSITION_SECTIONS': 4,
-                'CUSTOM_CSS_ACCENT_1': u'helvetica',
-                'CUSTOM_CSS_ACCENT_2': u'helvetica',
-                'CUSTOM_CSS_BODY_BACKGROUND_COLOR': u'purple',
-                'CUSTOM_CSS_BODY_FONT': u'helvetica',
-                'CUSTOM_CSS_BODY_FONT_COLOR': u'purple'},
+                'BLOCK_POSITION_LATEST': 1,
+                'BLOCK_POSITION_BANNER': 2,
+                'BLOCK_POSITION_SECTIONS': 3,
+                'BLOCK_POSITION_QUESTIONS': 4,
+                'CUSTOM_CSS_ACCENT_1': u'blue',
+                'CUSTOM_CSS_ACCENT_2': u'green',
+                'CUSTOM_CSS_BASE_BACKGROUND_COLOR': u'purple',
+                'CUSTOM_CSS_BODY_FONT_FAMILY': u'helvetica',
+                'CUSTOM_CSS_BLOCK_BACKGROUND_COLOR': u'teal',
+                'CUSTOM_CSS_BLOCK_FONT_FAMILY': u'arial',
+                'CUSTOM_CSS_BLOCK_TEXT_TRANSFORM': u'uppercase'},
             "container": {
                 "type": "DOCKER",
                 "docker": {
