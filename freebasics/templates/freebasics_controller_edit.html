@@ -1,20 +1,4 @@
 {% extends "skins/base.html"%}
-{% block extra_js %}
-<script type="text/javascript">
-{% if object %}
-  fb.init( {
-      isNew: false,
-      template_data_url: '/templates/{{object.freebasicstemplatedata.pk}}/'
-  };)
-{% else %}
-  fb.init( {
-    isNew: true,
-    template_data_url: '/templates/'
-  };)
-{% endif %}
-</script>
-{% endblock %}
-
 {% load static from staticfiles %}
 
 {% block content %}
@@ -405,4 +389,20 @@
   <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+{% if object %}
+  fb.init( {
+      isNew: false,
+      template_data_url: '/templates/{{object.freebasicstemplatedata.pk}}/'
+  })
+{% else %}
+  fb.init( {
+    isNew: true,
+    template_data_url: '/templates/'
+  })
+{% endif %}
+</script>
 {% endblock %}

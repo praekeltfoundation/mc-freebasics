@@ -411,7 +411,9 @@ var fb = (function($) {
 	function saveConfigAjax() {
 		return $.ajax({
 			url: that.serverUrl,
-			type: 'POST',
+			type: that.isNew
+  			? 'POST'
+  			: 'PUT',
 			dataType: 'json',
 			data: JSON.stringify(toApi(site))
 		});
