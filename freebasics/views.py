@@ -1,13 +1,15 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
+from django.conf import settings
 
 from mc2.controllers.base.views import ControllerCreateView, ControllerEditView
 from mc2.views import HomepageView
-from freebasics.forms import FreeBasicsControllerForm
+from mc2.organizations.utils import active_organization
+from mc2 import tasks
 
 from freebasics.models import FreeBasicsTemplateData, FreeBasicsController
 from freebasics.serializers import FreeBasicsDataSerializer
-
+from freebasics.tasks import update_marathon_app
 from rest_framework import generics
 
 
@@ -17,13 +19,30 @@ class TemplateDataCreate(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         controller = FreeBasicsController.objects.create(
-            owner=self.request.user)
-        serializer.save(controller=controller)
+            owner=self.request.user,
+            organization=active_organization(self.request),
+            docker_image=settings.FREE_BASICS_DOCKER_IMAGE,
+            volume_path=settings.FREE_BASICS_VOLUME_PATH,
+            volume_needed=True,
+            port=settings.FREE_BASICS_DOCKER_PORT,
+            marathon_health_check_path='/health/'
+        )
+        instance = serializer.save(controller=controller)
+        controller.name = instance.site_name
+        controller.domain_urls = '%s.%s' % (
+            instance.site_name_url,
+            settings.FREE_BASICS_MOLO_SITE_DOMAIN)
+        controller.save()
+        tasks.start_new_controller.delay(controller.id)
 
 
 class TemplateDataManage(generics.RetrieveUpdateDestroyAPIView):
     queryset = FreeBasicsTemplateData.objects.all()
     serializer_class = FreeBasicsDataSerializer
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        update_marathon_app.delay(instance.controller.id)
 
 
 class FreeBasicsHomepageView(HomepageView):
@@ -36,12 +55,10 @@ class FreeBasicsHomepageView(HomepageView):
 
 
 class FreeBasicsControllerCreateView(ControllerCreateView):
-    form_class = FreeBasicsControllerForm
     template_name = 'freebasics_controller_edit.html'
     permissions = ['controllers.docker.add_dockercontroller']
 
 
 class FreeBasicsControllerEditView(ControllerEditView):
-    form_class = FreeBasicsControllerForm
     template_name = 'freebasics_controller_edit.html'
     permissions = ['controllers.docker.add_dockercontroller']
