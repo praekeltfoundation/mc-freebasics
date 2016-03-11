@@ -415,7 +415,7 @@ var fb = (function($) {
   			? 'POST'
   			: 'PUT',
 			dataType: 'json',
-			data: JSON.stringify(toApi(site))
+			data: toApi(site)
 		});
 	}
 
