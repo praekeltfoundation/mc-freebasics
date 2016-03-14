@@ -18,6 +18,7 @@ class TemplateDataCreate(generics.ListCreateAPIView):
     serializer_class = FreeBasicsDataSerializer
 
     def perform_create(self, serializer):
+        data = serializer.validated_data
         controller = FreeBasicsController.objects.create(
             owner=self.request.user,
             organization=active_organization(self.request),
@@ -25,14 +26,13 @@ class TemplateDataCreate(generics.ListCreateAPIView):
             volume_path=settings.FREE_BASICS_VOLUME_PATH,
             volume_needed=True,
             port=settings.FREE_BASICS_DOCKER_PORT,
-            marathon_health_check_path='/health/'
+            marathon_health_check_path='/health/',
+            name=data.get('site_name'),
+            domain_urls='%s.%s' % (
+                data.get('site_name_url'),
+                settings.FREE_BASICS_MOLO_SITE_DOMAIN)
         )
-        instance = serializer.save(controller=controller)
-        controller.name = instance.site_name
-        controller.domain_urls = '%s.%s' % (
-            instance.site_name_url,
-            settings.FREE_BASICS_MOLO_SITE_DOMAIN)
-        controller.save()
+        serializer.save(controller=controller)
         tasks.start_new_controller.delay(controller.id)
 
 
