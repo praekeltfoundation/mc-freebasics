@@ -113,7 +113,10 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                 'CUSTOM_CSS_BODY_FONT_FAMILY': u'helvetica',
                 'CUSTOM_CSS_BLOCK_BACKGROUND_COLOR': u'teal',
                 'CUSTOM_CSS_BLOCK_FONT_FAMILY': u'arial',
-                'CUSTOM_CSS_BLOCK_TEXT_TRANSFORM': u'uppercase'},
+                'CUSTOM_CSS_BLOCK_TEXT_TRANSFORM': u'uppercase',
+                'CAS_SERVER_URL': u'http://testserver',
+                'RAVEN_DSN': u'http://test-raven-dsn',
+            },
             "container": {
                 "type": "DOCKER",
                 "docker": {

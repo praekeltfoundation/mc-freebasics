@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+
 from mc2.controllers.docker.models import DockerController
 
 
@@ -15,6 +17,11 @@ class FreeBasicsController(DockerController):
 
         if self.freebasicstemplatedata:
             env_data.update(self.freebasicstemplatedata.to_env_dict())
+
+        env_data.update({
+            'CAS_SERVER_URL': settings.FREE_BASICS_CAS_SERVER_URL,
+            'RAVEN_DSN': settings.FREE_BASICS_RAVEN_DSN})
+
         data.update({'env': env_data})
         return data
 
