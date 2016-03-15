@@ -4,6 +4,7 @@ from django.conf import settings
 
 from mc2.controllers.base.views import ControllerCreateView, ControllerEditView
 from mc2.views import HomepageView
+from mc2.organizations.models import Organization
 from mc2.organizations.utils import active_organization
 from mc2 import tasks
 
@@ -52,8 +53,14 @@ class TemplateDataManage(generics.RetrieveUpdateDestroyAPIView):
 class FreeBasicsHomepageView(HomepageView):
 
     def dispatch(self, request, *args, **kwargs):
-        if not self.get_queryset().exists():
-            return redirect(reverse('freebasics_add'))
+        if not request.user.is_superuser:
+            user_orgs = Organization.objects.for_user(request.user)
+            if not self.get_queryset().exists() and user_orgs.exists():
+                return redirect(reverse('freebasics_add'))
+        else:
+            if not self.get_queryset().exists():
+                return redirect(reverse('freebasics_add'))
+
         return super(
             FreeBasicsHomepageView, self).dispatch(request, *args, **kwargs)
 

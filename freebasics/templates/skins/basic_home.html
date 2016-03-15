@@ -8,12 +8,37 @@
 
 {% block search %}{% endblock %}
 
+{% block sidebar %}
+<aside class="main-sidebar">
+
+  <section class="sidebar">
+
+    <!-- Sidebar Menu -->
+    <ul class="sidebar-menu">
+      <!-- Optionally, you can add icons to the links -->
+      {% if organizations.exists %}
+      <li class="active"><a href="/"><i class="fa fa-home"></i> <span>Home</span></a></li>
+      {% endif %}
+      <li><a target="_blank" href="https://freebasicsincubator.zendesk.com"><i class="fa fa-tachometer"></i> <span>Helpdesk</span></a></li>
+      <li class="treeview">
+    </ul>
+    <!-- /.sidebar-menu -->
+
+  </section>
+  <!-- /.sidebar -->
+</aside>
+{% endblock %}
+
 {% block content %}
 <div class="content-wrapper" id="stepper">
 <div class="content stepper-content">
-{% for controller in controller_list %}
-{% render_controller controller %}
-{% endfor %}
+{% if organizations.exists or request.user.is_superuser %}
+  {% for controller in controller_list %}
+  {% render_controller controller %}
+  {% endfor %}
+{% else %}
+<div>You do not have permissions to use this site.</div>
+{% endif %}
 </div>
 </div>
 
