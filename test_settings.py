@@ -29,3 +29,4 @@ SCRATCHPATH = scratchpath()
 MESOS_MARATHON_HOST = 'http://testserver:8080'
 FREE_BASICS_CAS_SERVER_URL = 'http://testserver'
 FREE_BASICS_RAVEN_DSN = 'http://test-raven-dsn'
+FREE_BASICS_VOLUME_PATH = '/path/to/media/'

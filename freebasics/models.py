@@ -20,7 +20,10 @@ class FreeBasicsController(DockerController):
 
         env_data.update({
             'CAS_SERVER_URL': settings.FREE_BASICS_CAS_SERVER_URL,
-            'RAVEN_DSN': settings.FREE_BASICS_RAVEN_DSN})
+            'RAVEN_DSN': settings.FREE_BASICS_RAVEN_DSN,
+            'DATABASE_URL': "sqlite:///%s%s" % (
+                settings.FREE_BASICS_VOLUME_PATH, 'molo.db'),
+        })
 
         data.update({'env': env_data})
         return data

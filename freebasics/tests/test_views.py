@@ -114,8 +114,9 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                 'CUSTOM_CSS_BLOCK_BACKGROUND_COLOR': u'teal',
                 'CUSTOM_CSS_BLOCK_FONT_FAMILY': u'arial',
                 'CUSTOM_CSS_BLOCK_TEXT_TRANSFORM': u'uppercase',
-                'CAS_SERVER_URL': u'http://testserver',
-                'RAVEN_DSN': u'http://test-raven-dsn',
+                'CAS_SERVER_URL': 'http://testserver',
+                'RAVEN_DSN': 'http://test-raven-dsn',
+                'DATABASE_URL': 'sqlite:////path/to/media/molo.db',
             },
             "container": {
                 "type": "DOCKER",
@@ -129,7 +130,7 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                         {
                             "key": "volume",
                             "value":
-                                "%s_media:/deploy/media/" % controller.app_id
+                                "%s_media:/path/to/media/" % controller.app_id
                         }]
                 }
             },
