@@ -99,7 +99,7 @@ var fb = (function($) {
         .then( setupConfig )
         .fail( function(data, textStatus, jqXHR) {
             ajaxErrorLoad(data, textStatus, jqXHR);
-            setupConfig();
+            setupConfig(null);
         });
 	}
 
@@ -116,7 +116,7 @@ var fb = (function($) {
 
 	// callback after sync or async config loaded. If it's async, data will be populated with JSONP callback data
 	function setupConfig(data, textStatus, jqXHR) {
-		if (data && data.length > 0) {
+		if (data !== null) {
 			that.loadedConfig = data;
 		}
         if (!that.loadedConfig) {
@@ -497,46 +497,6 @@ var fb = (function($) {
 		deleteSavedConfig: deleteSavedConfigLocalStorage
 	};
 })(jQuery);
-
-/*var config = {
-	general: {
-		siteName: "your-site-name",
-		siteNameUrl: "your-site-name"
-	},
-	styles: {
-		"fb-body": {
-			"background-color": "#ffffff",
-			"color": "#000000",
-			"font-family": "Arial, Helvetica, sans-serif"
-		},
-		"fb-accent-1": {
-			"color": "#4383CD"
-		},
-		"fb-accent-2": {
-			"color": "#97ee7b"
-		}
-	},
-	blocks: {
-		"fb-block-header": {     // corresponds with the id of the sortable block
-			position: 0
-		},
-		"fb-block-article":{
-			position: 4
-		},
-		"fb-block-banner": {
-			position: 2
-		},
-		"fb-block-category": {
-			position: 3
-		},
-		"fb-block-poll": {
-			position: 1
-		},
-		"fb-block-footer": {
-			position: 5
-		}
-	}
-};*/
 
 if (typeof exports === 'object' && typeof module === 'object') {
     module.exports = fb;
