@@ -42,6 +42,11 @@ class TemplateDataManage(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         instance = serializer.save()
+        instance.controller.name = instance.site_name
+        instance.controller.domain_urls = '%s.%s' % (
+            instance.site_name_url,
+            settings.FREE_BASICS_MOLO_SITE_DOMAIN)
+        instance.controller.save()
         update_marathon_app.delay(instance.controller.id)
 
 

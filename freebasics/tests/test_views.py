@@ -27,13 +27,19 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
 
         self.client.login(username='testuser', password='test')
         post_data = {
-            'site_name': 'example', 'site_name_url': 'https://example.com',
+            'site_name': 'example', 'site_name_url': 'example',
             'body_background_color': 'purple', 'body_color': 'purple',
             'body_font_family': 'helvetica', 'accent1': '', 'accent2': ''}
         response = self.client.post(reverse('template_list'), post_data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(FreeBasicsTemplateData.objects.all().count(), 1)
         self.assertEqual(FreeBasicsController.objects.all().count(), 1)
+        self.assertEqual(
+            FreeBasicsController.objects.all().first().name,
+            'example')
+        self.assertEqual(
+            FreeBasicsController.objects.all().first().domain_urls,
+            'example.molo.site')
         pk = FreeBasicsTemplateData.objects.get(site_name='example').pk
         response = self.client.get(reverse(
             'template_detail', kwargs={'pk': pk}))
@@ -43,14 +49,25 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
             FreeBasicsController.objects.all().first().app_id)
 
         post_data = {
-            'site_name': 'example2', 'site_name_url': 'https://example2.com',
+            'site_name': 'example 2', 'site_name_url': 'example-2',
             'body_background_color': 'purple', 'body_color': 'purple',
             'body_font_family': 'helvetica', 'accent1': '', 'accent2': ''}
         response = self.client.put(reverse(
             'template_detail', kwargs={'pk': pk}), data=json.dumps(post_data),
             content_type='application/json')
+
         self.assertEquals(
-            FreeBasicsTemplateData.objects.get(pk=pk).site_name, 'example2')
+            FreeBasicsTemplateData.objects.get(pk=pk).site_name, 'example 2')
+        self.assertEquals(
+            FreeBasicsTemplateData.objects.get(pk=pk).site_name_url,
+            'example-2')
+        self.assertEquals(
+            FreeBasicsTemplateData.objects.get(pk=pk).controller.name,
+            'example 2')
+        self.assertEquals(
+            FreeBasicsTemplateData.objects.get(pk=pk).controller.domain_urls,
+            'example-2.molo.site')
+
         response = self.client.delete(reverse(
             'template_detail', kwargs={'pk': pk}))
         self.assertEqual(response.status_code, 204)
