@@ -3,6 +3,8 @@ import pytest
 import responses
 
 from mc2.controllers.base.tests.base import ControllerBaseTestCase
+from mc2.organizations.models import Organization, OrganizationUserRelation
+
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
@@ -90,6 +92,7 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
         self.assertEqual(response.status_code, 201)
 
         controller = FreeBasicsController.objects.all().first()
+        self.mk_env_variable(controller)
 
         self.assertEquals(controller.get_marathon_app_data(), {
             "id": controller.app_id,
@@ -118,6 +121,7 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                 'RAVEN_DSN': 'http://test-raven-dsn',
                 'DATABASE_URL': 'sqlite:////path/to/media/molo.db',
                 'SITE_NAME': 'example',
+                'TEST_KEY': 'a test value',
             },
             "container": {
                 "type": "DOCKER",
@@ -136,3 +140,44 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                 }
             }
         })
+
+    def test_normal_user_with_no_org_has_permission_denied(self):
+        self.client.login(username='testuser', password='test')
+        response = self.client.get('/')
+        self.assertContains(
+            response,
+            'You do not have permissions to use this site')
+
+    def test_superuser_with_no_org_has_permission_to_add(self):
+        User.objects.create_superuser('joe', 'joe@email.com', '1234')
+        self.client.login(username='joe', password='1234')
+
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response['Location'], 'http://testserver/add/')
+
+    def test_superuser_sees_all_apps_if_they_exist(self):
+        self.mock_create_marathon_app()
+        self.client.login(username='testuser', password='test')
+        post_data = {'site_name': 'Test App', 'site_name_url': 'test-app'}
+        self.client.post(reverse('template_list'), post_data)
+
+        self.client.logout()
+
+        User.objects.create_superuser('joe', 'joe@email.com', '1234')
+        self.client.login(username='joe', password='1234')
+
+        response = self.client.get('/')
+        self.assertContains(response, 'Test App')
+
+    def test_normal_user_with_org_is_automatically_redirected_to_add(self):
+        # normal user with org will see the Test App
+        user = User.objects.create_user('joe', 'joe@email.com', '1234')
+        org = Organization.objects.create(name='Test', slug='test')
+        OrganizationUserRelation.objects.create(user=user, organization=org)
+
+        self.client.login(username='joe', password='1234')
+
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response['Location'], 'http://testserver/add/')
