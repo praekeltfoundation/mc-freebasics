@@ -58,7 +58,7 @@ class FreeBasicsTemplateData(models.Model):
             'CUSTOM_CSS_BLOCK_TEXT_TRANSFORM': self.text_transform,
             'CUSTOM_CSS_ACCENT_1': self.accent1,
             'CUSTOM_CSS_ACCENT_2': self.accent2,
-            'BLOCK_POSITION_BANNER': self.banner_position,
-            'BLOCK_POSITION_LATEST': self.article_position,
-            'BLOCK_POSITION_QUESTIONS': self.poll_position,
-            'BLOCK_POSITION_SECTIONS': self.category_position}
+            'BLOCK_POSITION_BANNER': str(self.banner_position),
+            'BLOCK_POSITION_LATEST': str(self.article_position),
+            'BLOCK_POSITION_QUESTIONS': str(self.poll_position),
+            'BLOCK_POSITION_SECTIONS': str(self.category_position)}
