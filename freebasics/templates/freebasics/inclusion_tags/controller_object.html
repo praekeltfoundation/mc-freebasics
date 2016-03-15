@@ -4,14 +4,14 @@
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-user-header bg-purple">
               <h3 class="widget-user-username">{{controller.name}}</h3>
-              <h6 class="widget-user-desc">http://happyplace.molo.site</h6>
+              <h6 class="widget-user-desc">http://{{controller.domain_urls}}</h6>
               <div class="widget-user-desc">Last modified on {{controller.modified_at|date:"D d M Y" }}</div>
             </div>
             <div class="box-footer">
               <div class="row">
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <h5 class="description-header"><a href="#">View</a></h5>
+                    <h5 class="description-header"><a href="http://{{controller.domain_urls}}" target="_blank">View</a></h5>
                     <span class="description-text"></span>
                   </div>
                   <!-- /.description-block -->
@@ -19,7 +19,7 @@
                 <!-- /.col -->
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <h5 class="description-header"><a href="#">Admin</a></h5>
+                    <h5 class="description-header"><a href="http://{{controller.domain_urls}}/admin/" target="_blank">Admin</a></h5>
                     <span class="description-text"></span>
                   </div>
                   <!-- /.description-block -->
