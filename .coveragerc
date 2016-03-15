@@ -1,0 +1,2 @@
+[run]
+omit = freebasics/migrations/*,ve/*,freebasics/wsgi.py
