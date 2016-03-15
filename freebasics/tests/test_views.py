@@ -133,15 +133,5 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                                 "%s_media:/path/to/media/" % controller.app_id
                         }]
                 }
-            },
-            "ports": [0],
-            "healthChecks": [{
-                "gracePeriodSeconds": 3,
-                "intervalSeconds": 10,
-                "maxConsecutiveFailures": 3,
-                "path": u'/health/',
-                "portIndex": 0,
-                "protocol": "HTTP",
-                "timeoutSeconds": 5
-            }]
+            }
         })

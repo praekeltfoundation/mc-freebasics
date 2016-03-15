@@ -26,7 +26,6 @@ class TemplateDataCreate(generics.ListCreateAPIView):
             volume_path=settings.FREE_BASICS_VOLUME_PATH,
             volume_needed=True,
             port=settings.FREE_BASICS_DOCKER_PORT,
-            marathon_health_check_path='/health/',
             name=data.get('site_name'),
             domain_urls='%s.%s' % (
                 data.get('site_name_url'),
