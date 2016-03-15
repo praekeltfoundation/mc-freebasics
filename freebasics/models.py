@@ -71,4 +71,6 @@ class FreeBasicsTemplateData(models.Model):
             'BLOCK_POSITION_BANNER': str(self.banner_position),
             'BLOCK_POSITION_LATEST': str(self.article_position),
             'BLOCK_POSITION_QUESTIONS': str(self.poll_position),
-            'BLOCK_POSITION_SECTIONS': str(self.category_position)}
+            'BLOCK_POSITION_SECTIONS': str(self.category_position),
+            'SITE_NAME': self.site_name,
+        }

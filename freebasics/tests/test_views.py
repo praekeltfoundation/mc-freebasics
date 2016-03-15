@@ -117,6 +117,7 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                 'CAS_SERVER_URL': 'http://testserver',
                 'RAVEN_DSN': 'http://test-raven-dsn',
                 'DATABASE_URL': 'sqlite:////path/to/media/molo.db',
+                'SITE_NAME': 'example',
             },
             "container": {
                 "type": "DOCKER",
