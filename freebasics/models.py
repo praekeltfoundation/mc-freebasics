@@ -33,7 +33,7 @@ class FreeBasicsController(DockerController):
         """
         The app id to use for marathon
         """
-        return 'freebasics-%s' % self.slug
+        return '%s%s' % (settings.APP_ID_PREFIX, self.slug)
 
 
 class FreeBasicsTemplateData(models.Model):
