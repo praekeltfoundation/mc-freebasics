@@ -7,6 +7,8 @@ CELERY_IMPORTS += ('freebasics.tasks', )
 
 ROOT_URLCONF = 'freebasics.urls'
 
+MAMA_CAS_ATTRIBUTE_CALLBACKS = ('freebasics.permissions.org_permissions',)
+
 FREE_BASICS_DOCKER_IMAGE = environ.get(
     'FREE_BASICS_DOCKER_IMAGE', 'praekeltfoundation/molo-freebasics')
 
@@ -18,6 +20,9 @@ FREE_BASICS_VOLUME_PATH = environ.get(
 
 FREE_BASICS_DOCKER_PORT = environ.get(
     'FREE_BASICS_DOCKER_PORT', 80)
+
+APP_ID_PREFIX = environ.get(
+    'FREE_BASICS_APP_ID_PREFIX', 'freebasics-')
 
 FREE_BASICS_CAS_SERVER_URL = environ.get('FREE_BASICS_CAS_SERVER_URL', '')
 FREE_BASICS_RAVEN_DSN = environ.get('FREE_BASICS_RAVEN_DSN', '')
