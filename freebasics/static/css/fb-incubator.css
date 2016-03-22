@@ -580,3 +580,10 @@ a.sidebar-toggle{
 .fade.out {
   opacity: 0;
 }
+.logout-button {
+  color: #ffffff;
+  text-decoration: underline;
+  padding: 20px;
+  vertical-align: middle;
+  line-height: 3;
+}
