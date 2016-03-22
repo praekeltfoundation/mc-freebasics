@@ -59,7 +59,9 @@
             <i class="fa fa-bell-o"></i>
           </a>
         </li>
+        {% if request.user.is_authenticated %}
          <a class="logout-button" href="/logout/">logout</a>
+        {% endif %}
         <!-- Tasks Menu -->
         <li class="dropdown tasks-menu">
           <!-- Menu Toggle Button -->
