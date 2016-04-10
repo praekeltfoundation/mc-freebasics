@@ -11,7 +11,7 @@ var fb = (function($) {
 
 		// holds the default styles and inputs
 		styles: {
-			"base-color": {
+			"base-bcolor": {
 				"background-color": "#efefef"
 			},
 			"fb-body": {
@@ -426,7 +426,7 @@ var fb = (function($) {
 							siteNameUrl: d.site_name_url
 						},
 						styles: {
-							"base-color": {
+							"base-bcolor": {
 								"background-color": d.base_background_color
 							},
 							"fb-body": {
@@ -473,7 +473,7 @@ var fb = (function($) {
             return {
 							'site_name': d.general.siteName,
 							'site_name_url': d.general.siteNameUrl,
-							'base_background_color': d.styles["base-color"]["background-color"],
+							'base_background_color': d.styles["base-bcolor"]["background-color"],
 				      'body_font_family': d.styles["fb-body"]["font-family"],
 							'block_background_color': d.styles["block-heading"]["background-color"],
 				      'block_font_family': d.styles["block-heading"]["font-family"],
