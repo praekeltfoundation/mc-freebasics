@@ -59,15 +59,17 @@
             <i class="fa fa-bell-o"></i>
           </a>
         </li>
-        {% if request.user.is_authenticated %}
-         <a class="logout-button" href="/logout/">logout</a>
-        {% endif %}
         <!-- Tasks Menu -->
         <li class="dropdown tasks-menu">
           <!-- Menu Toggle Button -->
           <a href="#">
             <i class="fa fa-flag-o"></i>
           </a>
+        </li>
+        <li>
+          {% if request.user.is_authenticated %}
+          <a class="logout-button" href="/logout/">logout</a>
+          {% endif %}
         </li>
       </ul>
     </div>
