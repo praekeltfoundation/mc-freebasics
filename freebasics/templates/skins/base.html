@@ -66,11 +66,11 @@
             <i class="fa fa-flag-o"></i>
           </a>
         </li>
+        {% if request.user.is_authenticated %}
         <li>
-          {% if request.user.is_authenticated %}
           <a class="logout-button" href="/logout/">logout</a>
-          {% endif %}
         </li>
+        {% endif %}
       </ul>
     </div>
   </nav>
