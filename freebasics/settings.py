@@ -3,8 +3,6 @@ from os import environ
 
 INSTALLED_APPS = ('freebasics', 'rest_framework') + INSTALLED_APPS
 
-CELERY_IMPORTS += ('freebasics.tasks', )
-
 ROOT_URLCONF = 'freebasics.urls'
 
 MAMA_CAS_ATTRIBUTE_CALLBACKS = ('freebasics.permissions.org_permissions',)
@@ -20,6 +18,9 @@ FREE_BASICS_VOLUME_PATH = environ.get(
 
 FREE_BASICS_DOCKER_PORT = environ.get(
     'FREE_BASICS_DOCKER_PORT', 80)
+
+FREE_BASICS_HEALTH_CHECK_PATH = environ.get(
+    'FREE_BASICS_HEALTH_CHECK_PATH', '/health/')
 
 APP_ID_PREFIX = environ.get(
     'FREE_BASICS_APP_ID_PREFIX', 'freebasics-')

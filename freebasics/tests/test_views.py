@@ -138,7 +138,17 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                                 "%s_media:/path/to/media/" % controller.app_id
                         }]
                 }
-            }
+            },
+            "ports": [0],
+            "healthChecks": [{
+                "gracePeriodSeconds": 60,
+                "intervalSeconds": 10,
+                "maxConsecutiveFailures": 3,
+                "path": '/health/',
+                "portIndex": 0,
+                "protocol": "HTTP",
+                "timeoutSeconds": 20
+            }]
         })
 
     def test_normal_user_with_no_org_has_permission_denied(self):
