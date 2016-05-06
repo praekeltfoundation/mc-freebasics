@@ -6,11 +6,10 @@ from mc2.controllers.base.views import ControllerCreateView, ControllerEditView
 from mc2.views import HomepageView
 from mc2.organizations.models import Organization
 from mc2.organizations.utils import active_organization
-from mc2 import tasks
+from mc2.controllers.base import tasks
 
 from freebasics.models import FreeBasicsTemplateData, FreeBasicsController
 from freebasics.serializers import FreeBasicsDataSerializer
-from freebasics.tasks import update_marathon_app
 from rest_framework import generics
 
 
@@ -27,6 +26,7 @@ class TemplateDataCreate(generics.ListCreateAPIView):
             volume_path=settings.FREE_BASICS_VOLUME_PATH,
             volume_needed=True,
             port=settings.FREE_BASICS_DOCKER_PORT,
+            marathon_health_check_path=settings.FREE_BASICS_HEALTH_CHECK_PATH,
             name=data.get('site_name'),
             domain_urls='%s.%s' % (
                 data.get('site_name_url'),
@@ -47,7 +47,7 @@ class TemplateDataManage(generics.RetrieveUpdateDestroyAPIView):
             instance.site_name_url,
             settings.FREE_BASICS_MOLO_SITE_DOMAIN)
         instance.controller.save()
-        update_marathon_app.delay(instance.controller.id)
+        tasks.update_marathon_app.delay(instance.controller.id)
 
 
 class FreeBasicsHomepageView(HomepageView):
