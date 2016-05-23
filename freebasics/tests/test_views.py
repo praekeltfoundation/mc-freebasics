@@ -122,6 +122,10 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                 'DATABASE_URL': 'sqlite:////path/to/media/molo.db',
                 'SITE_NAME': 'example',
                 'TEST_KEY': 'a test value',
+                'EMAIL_HOST': 'localhost',
+                'EMAIL_PORT': 25,
+                'EMAIL_HOST_USER': '',
+                'EMAIL_HOST_PASSWORD': '',
             },
             "container": {
                 "type": "DOCKER",
