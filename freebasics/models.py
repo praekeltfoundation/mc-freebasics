@@ -23,6 +23,11 @@ class FreeBasicsController(DockerController):
             'RAVEN_DSN': settings.FREE_BASICS_RAVEN_DSN,
             'DATABASE_URL': "sqlite:///%s%s" % (
                 settings.FREE_BASICS_VOLUME_PATH, 'molo.db'),
+            'EMAIL_HOST': settings.EMAIL_HOST,
+            'EMAIL_PORT': settings.EMAIL_PORT,
+            'EMAIL_HOST_USER': settings.EMAIL_HOST_USER,
+            'EMAIL_HOST_PASSWORD': settings.EMAIL_HOST_PASSWORD,
+
         })
 
         data.update({'env': env_data})
