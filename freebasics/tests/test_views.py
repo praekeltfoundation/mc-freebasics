@@ -99,11 +99,20 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
             "cpus": 0.1,
             "mem": 128.0,
             "instances": 1,
+            "backoffFactor": 1.15,
+            "backoffSeconds": 1,
             "labels": {
                 "domain": u"{}.{} {}".format(controller.app_id,
                                              settings.HUB_DOMAIN,
                                              'example.molo.site'),
                 "name": u"example",
+                "traefik.frontend.rule":
+                    u"Host: {}.test.com, {}".format(controller.app_id,
+                                                    'example.molo.site'),
+                'HAPROXY_GROUP': 'external',
+                'HAPROXY_0_VHOST':
+                    u'{}.test.com {}'.format(controller.app_id,
+                                             'example.molo.site'),
             },
             'env': {
                 'BLOCK_POSITION_LATEST': '1',
@@ -120,8 +129,8 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                 'CAS_SERVER_URL': 'http://testserver',
                 'RAVEN_DSN': 'http://test-raven-dsn',
                 'DATABASE_URL': 'sqlite:////path/to/media/molo.db',
-                'SITE_NAME': 'example',
-                'TEST_KEY': 'a test value',
+                'SITE_NAME': u'example',
+                u'TEST_KEY': u'a test value',
                 'EMAIL_HOST': 'localhost',
                 'EMAIL_PORT': 25,
                 'EMAIL_HOST_USER': '',
@@ -148,7 +157,7 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                 "gracePeriodSeconds": 60,
                 "intervalSeconds": 10,
                 "maxConsecutiveFailures": 3,
-                "path": '/health/',
+                "path": u'/health/',
                 "portIndex": 0,
                 "protocol": "HTTP",
                 "timeoutSeconds": 20
