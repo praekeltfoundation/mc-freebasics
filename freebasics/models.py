@@ -5,6 +5,7 @@ from mc2.controllers.docker.models import DockerController
 
 
 class FreeBasicsController(DockerController):
+    postgres_db_url = models.TextField(null=True, blank=True)
 
     def get_marathon_app_data(self):
         data = super(FreeBasicsController, self).get_marathon_app_data()
@@ -21,7 +22,7 @@ class FreeBasicsController(DockerController):
         env_data.update({
             'CAS_SERVER_URL': settings.FREE_BASICS_CAS_SERVER_URL,
             'RAVEN_DSN': settings.FREE_BASICS_RAVEN_DSN,
-            'DATABASE_URL': "sqlite:///%s%s" % (
+            'DATABASE_URL': self.postgres_db_url or "sqlite:///%s%s" % (
                 settings.FREE_BASICS_VOLUME_PATH, 'molo.db'),
             'EMAIL_HOST': settings.EMAIL_HOST,
             'EMAIL_PORT': settings.EMAIL_PORT,

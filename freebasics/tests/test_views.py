@@ -155,6 +155,32 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
             }]
         })
 
+    @responses.activate
+    def test_use_postgres_db_if_provided(self):
+        self.mock_create_marathon_app()
+
+        self.client.login(username='testuser', password='test')
+        post_data = {
+            'site_name': 'example', 'site_name_url': 'example',
+            'body_background_color': 'purple', 'body_color': 'purple',
+            'body_font_family': 'helvetica', 'accent1': '', 'accent2': ''}
+        response = self.client.post(reverse('template_list'), post_data)
+        self.assertEqual(response.status_code, 201)
+
+        controller = FreeBasicsController.objects.all().first()
+        envs = controller.get_marathon_app_data()['env']
+        self.assertEquals(
+            envs['DATABASE_URL'],
+            'sqlite:////path/to/media/molo.db')
+
+        controller.postgres_db_url = 'postgres://user:pass@testserver/testdb'
+        controller.save()
+
+        envs = controller.get_marathon_app_data()['env']
+        self.assertEquals(
+            envs['DATABASE_URL'],
+            'postgres://user:pass@testserver/testdb')
+
     def test_normal_user_with_no_org_has_permission_denied(self):
         self.client.login(username='testuser', password='test')
         response = self.client.get('/')
