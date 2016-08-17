@@ -11,4 +11,4 @@ class FreeBasicsDataSerializer(serializers.ModelSerializer):
             'block_font_family', 'text_transform', 'accent1', 'accent2',
             'header_position', 'article_position', 'banner_position',
             'category_position', 'poll_position', 'footer_position')
-        read_only_fields = ('controller')
+        read_only_fields = ('controller', )
