@@ -1,2 +1,2 @@
-mission-control2==3.3.2
+mission-control2==3.4.0
 djangorestframework
