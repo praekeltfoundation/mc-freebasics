@@ -1,7 +1,8 @@
 from mc2.settings import *
 from os import environ
 
-INSTALLED_APPS = ('freebasics', 'rest_framework') + INSTALLED_APPS
+INSTALLED_APPS = (
+    'freebasics', 'rest_framework') + INSTALLED_APPS + ('overextends', )
 
 ROOT_URLCONF = 'freebasics.urls'
 

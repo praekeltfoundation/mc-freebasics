@@ -19,8 +19,10 @@
       {% if organizations.exists %}
       <li class="active"><a href="/"><i class="fa fa-home"></i> <span>Home</span></a></li>
       {% endif %}
-      <li><a target="_blank" href="https://freebasicsincubator.zendesk.com"><i class="fa fa-tachometer"></i> <span>Helpdesk</span></a></li>
-      <li class="treeview">
+      <li><a target="_blank" href="https://freebasicsincubator.zendesk.com"><i class="fa fa-question"></i> <span>Helpdesk</span></a></li>
+      {% if user.is_superuser %}
+      <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+      {% endif %}
     </ul>
     <!-- /.sidebar-menu -->
 

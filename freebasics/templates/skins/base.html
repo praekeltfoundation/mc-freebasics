@@ -21,6 +21,7 @@
   <!-- Free Basics Incubator style -->
   <link href="{% static 'css/fb-incubator.css' %}" rel="stylesheet">
   <link href="{% static 'css/template-base.css' %}" rel="stylesheet">
+  <link href="{% static 'plugins/datatables/jquery.dataTables.min.css' %}" rel="stylesheet">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -86,8 +87,10 @@
     <ul class="sidebar-menu">
       <!-- Optionally, you can add icons to the links -->
       <li class="active"><a href="/"><i class="fa fa-home"></i> <span>Home</span></a></li>
-      <li><a target="_blank" href="https://freebasicsincubator.zendesk.com"><i class="fa fa-tachometer"></i> <span>Helpdesk</span></a></li>
-      <li class="treeview">
+      <li><a target="_blank" href="https://freebasicsincubator.zendesk.com"><i class="fa fa-question"></i> <span>Helpdesk</span></a></li>
+      {% if user.is_superuser %}
+      <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+      {% endif %}
     </ul>
     <!-- /.sidebar-menu -->
 
@@ -123,7 +126,9 @@
 <script src="{% static 'js/app.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}?v=20160407"></script>
 <script src="{% static 'js/fb-incubator.js' %}"></script>
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
 {% block extra_js %}{% endblock %}
-
+{% block script %}{% endblock %}
 </body>
 </html>
