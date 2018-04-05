@@ -28,3 +28,8 @@ APP_ID_PREFIX = environ.get(
 
 FREE_BASICS_CAS_SERVER_URL = environ.get('FREE_BASICS_CAS_SERVER_URL', '')
 FREE_BASICS_RAVEN_DSN = environ.get('FREE_BASICS_RAVEN_DSN', '')
+
+UNICORE_DISTRIBUTE_API = environ.get('UNICORE_DISTRIBUTE_API', '')
+FROM_EMAIL = environ.get('FROM_EMAIL', "support@moloproject.org")
+CONTENT_IMPORT_SUBJECT = environ.get(
+    'CONTENT_IMPORT_SUBJECT', 'Molo Content Import')
