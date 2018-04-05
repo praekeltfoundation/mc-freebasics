@@ -28,6 +28,9 @@ class FreeBasicsController(DockerController):
             'EMAIL_PORT': settings.EMAIL_PORT,
             'EMAIL_HOST_USER': settings.EMAIL_HOST_USER,
             'EMAIL_HOST_PASSWORD': settings.EMAIL_HOST_PASSWORD,
+            'UNICORE_DISTRIBUTE_API': settings.UNICORE_DISTRIBUTE_API,
+            'FROM_EMAIL': settings.FROM_EMAIL,
+            'CONTENT_IMPORT_SUBJECT': settings.CONTENT_IMPORT_SUBJECT,
 
         })
 

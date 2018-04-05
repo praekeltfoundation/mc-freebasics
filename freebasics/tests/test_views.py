@@ -135,6 +135,9 @@ class FreeBasicsControllerFormTestCase(TestCase, ControllerBaseTestCase):
                 'EMAIL_PORT': 25,
                 'EMAIL_HOST_USER': '',
                 'EMAIL_HOST_PASSWORD': '',
+                'UNICORE_DISTRIBUTE_API': '',
+                'FROM_EMAIL': 'support@moloproject.org',
+                'CONTENT_IMPORT_SUBJECT': 'Molo Content Import',
             },
             "container": {
                 "type": "DOCKER",
