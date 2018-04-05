@@ -24,6 +24,7 @@ CELERY_ALWAYS_EAGER = True
 def scratchpath(*paths):
     return abspath('.scratchpath', *paths)
 
+
 SCRATCHPATH = scratchpath()
 
 MESOS_MARATHON_HOST = 'http://testserver:8080'
